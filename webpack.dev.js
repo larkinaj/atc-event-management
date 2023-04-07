@@ -10,7 +10,7 @@ module.exports = merge(common, {
   mode: 'development',
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, './dist'),
     // public path necessary for historyApitFallback to serve all your files for react router an not only the first sub-path
     publicPath: '/',
   },
@@ -26,10 +26,10 @@ module.exports = merge(common, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, 'client/src/index.html'),
-      watch: true,
-      inject: 'body',
-      scriptLoading: 'blocking',
-      hash: false,
+      // watch: true,
+      // inject: 'body',
+      // scriptLoading: 'blocking',
+      // hash: false,
     }),
     new webpack.HotModuleReplacementPlugin(),
   ],
