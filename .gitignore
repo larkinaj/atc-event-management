@@ -5,4 +5,12 @@
 node_modules/
 
 # Rendered app folder
-dist
+dist/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# any zip files
+*.zip
