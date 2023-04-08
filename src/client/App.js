@@ -1,16 +1,15 @@
-import React from 'react';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import LandingPage from "./LandingPage";
 
-// top-most application containing everything
-
-function App() {
-
-  return (
-    <div>
-        <h1>I THINK TYPESCRIPT HAS BEEN CONFIGURED</h1>
-    </div>
-
-  );
-
+const App = () => {
+    return (
+        <div>
+            <Routes>
+                <Route path="/" element={<LandingPage />} />
+            </Routes>
+        </div>
+    )
 }
 
 export default App;

@@ -13,7 +13,8 @@
       "esModuleInterop": true,
       "jsx": "react",
       "allowJs": true,
-      "moduleResolution": "node"
+      "moduleResolution": "node",
+      "outDir": "./dist"
     },
     "exclude": [
       "node_modules"
