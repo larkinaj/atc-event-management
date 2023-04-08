@@ -1,12 +1,3 @@
-// const path = require('path');
-// const common = require('./webpack.common');
-// const { merge } = require('webpack-merge');
-// // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
-// const TerserWebpackPlugin = require('terser-webpack-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import CssMinimizerWebpackPlugin from 'css-minimizer-webpack-plugin';
 import TerserWebpackPlugin from 'terser-webpack-plugin';

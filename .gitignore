@@ -5,7 +5,7 @@
 node_modules/
 
 # Rendered app folder
-dist
+dist/
 
 # logs
 npm-debug.log*

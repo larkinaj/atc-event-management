@@ -6,8 +6,8 @@
   "type": "module",
   "main": "./src/index.js",
   "scripts": {
-    "start": "ts-node --esm ./server/mockServer.ts",
-    "dev": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' ./server/mockServer.ts & webpack-dev-server --config webpack.dev.js",
+    "start": "ts-node --esm ./src/server/server.ts",
+    "dev": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' ./src/server/server.ts & webpack-dev-server --config webpack.dev.js --hot --progress --color",
     "build": "webpack --config webpack.prod.js"
   },
   "author": "Kareem, Anna, Steven, Blessing, Andrew",
