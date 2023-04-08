@@ -1,0 +1,1 @@
+// pg model for blessing 
