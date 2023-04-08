@@ -13,7 +13,7 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import App from '../client/src/App.js';
+import App from './client/App';
 import { BrowserRouter as Router } from 'react-router-dom';
 render(
   <Router>
