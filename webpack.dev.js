@@ -20,7 +20,6 @@ const dev = merge(common.default, {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, './dist'),
-    path: path.resolve(__dirname, 'dist/'),
     // public path necessary for historyApitFallback to serve all your files for react router an not only the first sub-path
     publicPath: '/',
   },
