@@ -16,7 +16,7 @@ export default merge(common.default, {
   mode: 'production',
   output: {
     filename: 'main.[hash].js',
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, './dist'),
     clean: true,
   },
   module: {
