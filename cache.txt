@@ -1,0 +1,4 @@
+saving the previous "dev" configs in package.json 
+
+package.json previous dev ---> "dev": "concurrently \"webpack-dev-server --config webpack.dev.js\" \"nodemon ./server/server.js\"",
+anna's previous package.json dev ---> webpack serve --open --hot --progress --color
