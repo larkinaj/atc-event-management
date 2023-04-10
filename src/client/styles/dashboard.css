@@ -9,3 +9,12 @@ html, body {
     padding: 0;
     font-family: 'Anuphan', sans-serif;
 }
+
+#demo-simple-select {
+  min-width: 100px;
+}
+
+.searchIcon {
+  /* color: red; */
+  /* background-color: red; */
+}

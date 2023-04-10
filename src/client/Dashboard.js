@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { Button, TextField, Box, Link, Typography, Select, MenuItem, InputLabel } from '@mui/material'
+import { IconButton, TextField, Box, InputAdornment, Typography, Select, MenuItem, InputLabel, FormControl } from '@mui/material'
 import './styles/dashboard.css'
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import WorkIcon from '@mui/icons-material/Work';
+import { Search } from '@mui/icons-material';
 
 
 const Dashboard = () => {
@@ -18,19 +19,23 @@ const Dashboard = () => {
   });
 
   const searchEvents = (event) => {
-    event.preventDefault()
+    console.log(searchQuery)
     const newSearch = structuredClone(searchQuery)
-    setSearchQuery(newSearch.name = e.target.value);
-    // Uncomment the code below once the backend team finishes the routes
-    // fetch('http://localhost:3000/login', {
-    //   method: 'POST', 
-    //   headers: {'Content-Type': 'application/json'},
-    //   body: JSON.stringify(credentials)
-    // })
-    // .then((res)=>res.json())
-    // .then((data) => {
-    //   console.log(data)
-    // })
+
+  }
+
+  const searchChange = (event) => {
+    console.log('SEARCH CHANGE', event.target.value)
+    const newSearch = structuredClone(searchQuery)
+    newSearch.name = event.target.value
+    setSearchQuery(newSearch);
+  }
+
+  const industryChange = (event) => {
+    console.log('INDUSTRY CHANGE', event.target.value)
+    const newSearch = structuredClone(searchQuery)
+    newSearch.industry = event.target.value
+    setSearchQuery(newSearch);
   }
 
   const testEvent = {
@@ -45,25 +50,31 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="searchBar">
-        <Box
-          component="form"
-          noValidate autoComplete="off"
-          onSubmit={searchEvents}
-        >
-          <TextField
-            id="search-bar"
-            className="text"
-            variant="outlined"
-            placeholder="Search..."
-            size="small"
-          />
+        <TextField
+          id="search-bar"
+          className="text"
+          onChange={searchChange}
+          variant="outlined"
+          placeholder="Search..."
+          size="small"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={searchEvents} className="searchIcon" type="button" sx={{ p: '10px' }} aria-label="search">
+                  <Search className="searchIcon" />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+        <FormControl>
           <InputLabel id="demo-simple-select-label">Industry</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            // value={age}
-            placeholder="Search..."
-            label="Industry"
+            value={searchQuery.industry}
+            autoWidth label="Industry"
+            onChange={industryChange}
           >
             <MenuItem value="">
               <em>None</em>
@@ -71,8 +82,11 @@ const Dashboard = () => {
             <MenuItem value={'Information Technology'}>Information Technology</MenuItem>
             <MenuItem value={'Finance'}>Finance</MenuItem>
             <MenuItem value={'Healthcare'}>Healthcare</MenuItem>
+            <MenuItem value={'Entertainment'}>Entertainment</MenuItem>
+            <MenuItem value={'Marketing'}>Marketing</MenuItem>
+            <MenuItem value={'Food and Beverage'}>Food and Beverage</MenuItem>
           </Select>
-        </Box>
+        </FormControl>
       </div>
     </div>
   )
