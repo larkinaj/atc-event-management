@@ -10,11 +10,41 @@ html, body {
     font-family: 'Anuphan', sans-serif;
 }
 
-#demo-simple-select {
-  min-width: 100px;
+.dashboard {
+
 }
 
-.searchIcon {
-  /* color: red; */
-  /* background-color: red; */
+.searchEventDropdown {
+  min-width: 150px;
+}
+
+.queryBar {
+  /* margin-top: 100px;
+  margin-left: 50px; */
+  display: flex;
+  margin: 3rem;
+}
+
+#search-bar {
+  height: 100%;
+}
+
+.search-items {
+  margin: 10px;
+}
+
+.cardWrapper {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.eventCardContent {
+  width: 300px;
+  height: 150px;
+  margin-bottom: 16px;
+}
+
+.eventCardsWrapper {
+  margin: 5rem;
+  padding: 5rem;
 }
