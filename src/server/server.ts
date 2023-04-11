@@ -23,6 +23,7 @@ app.use('/api', api);
 // catch-all route handler 
 app.use((_req: Request, res: Response): unknown => res.status(404).send('This is not the page you\'re looking for...'));
 
+
 // global error handler
 app.use((err: unknown, _req: Request, res: Response, _next: NextFunction): unknown => {
     const defaultErr = {
