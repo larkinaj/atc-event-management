@@ -16,15 +16,15 @@ CREATE TABLE Events (
 
 CREATE TABLE Users (
     user_id serial PRIMARY KEY,
-    username varchar(50) NOT NULL,
+    username varchar(50) UNIQUE NOT NULL,
     password_ varchar(50) NOT NULL,
     first_name varchar(50) NOT NULL,
     last_name varchar(50) NOT NULL,
     email varchar(255) NOT NULL,
-    bio text NOT NULL,
+    bio text,
     industry varchar(255) NOT NULL,
-    user_resume bytea NOT NULL,
-    picture bytea NOT NULL
+    user_resume bytea,
+    picture bytea 
 ) WITH (
     OIDS = False
 );
@@ -36,3 +36,4 @@ CREATE TABLE Attendees (
 ) WITH (
     OIDS = False
 );
+

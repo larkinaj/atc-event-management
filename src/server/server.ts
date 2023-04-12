@@ -1,5 +1,7 @@
 import express from 'express';
 import path from 'path';
+import passport from 'passport';
+import './helpers/passport-config';
 const app = express();
 
 import {fileURLToPath} from 'url';
@@ -9,10 +11,15 @@ const __dirname = path.dirname(__filename);
 const PORT = 3000; 
 
 // import types
-import { Request, Response, NextFunction} from 'express';
+import { Request, Response, NextFunction } from 'express';
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+// MOUNT PASSPORT / AUTH / SESSIONS HERE
+
+
+// MOUNT ALL ROUTES HERE (ORDER MATTERS)
 
 // catch-all route handler 
 app.use((_req: Request, res: Response): unknown => res.status(404).send('This is not the page you\'re looking for...'));
