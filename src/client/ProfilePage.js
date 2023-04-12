@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { IconButton, Typography, InputAdornment, Select, Avatar, InputLabel, FormControl } from '@mui/material'
+import { Button, Typography, InputAdornment, CardContent, Avatar, Box, Card } from '@mui/material'
 import './styles/profile-page.css';
-import { Search } from '@mui/icons-material'; // default exports vs named exports
-
+import { BoltRounded, Search, Description } from '@mui/icons-material'; // default exports vs named exports
 
 const ProfilePage = () => {
   function stringToColor(string) {
@@ -26,33 +25,103 @@ const ProfilePage = () => {
       sx: {
         bgcolor: stringToColor(name),
         width: 150, height: 150,
-        fontSize: '45px'
+        fontSize: '45px',
+        margin: '15px'
       },
       children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
     };
   }
 
+  const testEvents = [
+    {
+      eventName: 'Codesmith Graduation Party',
+      eventDate: 'September 9, 2023',
+      industry: 'Information Technology',
+      eventType: 'Alumni Gathering',
+      location: 'NYC',
+      numAttendees: 32,
+    },
+    {
+      eventName: 'Burger Conference',
+      eventDate: 'April 20, 2023',
+      industry: 'Food and Beverage',
+      eventType: 'Career Fair',
+      location: 'San Fransisco',
+      numAttendees: 237,
+    },
+  ]
 
+  const eventCards = testEvents.map((event) => {
+    return (
+      <div className="cardWrapper">
+        <Card sx={{ borderColor: 'rgba(119, 136, 153, 0.5)', borderWidth: 1, borderStyle: 'solid' }}> {/* #778899 with 50% opaqueness represented in rgba */}
+          <React.Fragment>
+            <Box sx={{ height: 15, bgcolor: "#003366" }} />
+            <CardContent className="eventCardContent">
+              <Typography sx={{ fontSize: 14, margin: '0px' }} color="text.secondary" gutterBottom>
+                {event.eventDate}
+              </Typography>
+              <Typography variant="h6" component="div" sx={{ color: '#000000' }}>
+                {event.eventName} {/* This should be a link that shows user more information about event */}
+              </Typography>
+              <Typography sx={{ mb: 1, fontSize: 14 }} color="text.secondary">
+                {event.location} | {event.industry} | {event.eventType}
+              </Typography>
+              <Typography variant="body2" sx={{ fontSize: 14 }}>
+                {event.numAttendees} attendees
+              </Typography>
+            </CardContent>
+          </React.Fragment>
+        </Card>
+      </div>
+    );
+  });
 
   return (
     <div className="profile-page">
-      <div className="user-info">
-        <h1>profile</h1>
-        <Avatar 
+      <div className="user-info-column">
+        <Avatar
           {...stringAvatar('Andrew Larkin')}
         />
-        <Typography variant="body1" gutterBottom>
-          body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos
-          blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur,
-          neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum
-          quasi quidem quibusdam.
+        <Typography variant="h6" gutterBottom>
+          Larkinaj | Andrew Larkin
         </Typography>
+        <Typography variant="h6" gutterBottom>
+          larkin.aj@gmail.com
+        </Typography>
+        <Button>Edit User Info</Button>
+        <Button>
+          Upload resume
+          <Description/>
+        </Button>
       </div>
-      <div className="user-event-info">
-        <h1>profile events</h1>
+      <div className="user-events-column">
+        <div >
+          <Typography sx={{ fontSize: 20, fontWeight: 'bold', margin: '10px' }} className="eventsHostingHeader" gutterBottom>
+            Events I'm hosting
+          </Typography>
+          {eventCards}
+        </div>
+        <div>
+          <Typography sx={{ fontSize: 20, fontWeight: 'bold', margin: '10px' }} className="eventsHostingHeader" gutterBottom>
+            Events I'm attending
+          </Typography>
+          {eventCards}
+        </div>
+        <div>
+          <Typography sx={{ fontSize: 20, fontWeight: 'bold', margin: '10px' }} className="eventsHostingHeader" gutterBottom>
+            Events I'm following
+          </Typography>
+          {eventCards}
+        </div>
+        <div>
+          <Typography sx={{ fontSize: 20, fontWeight: 'bold', margin: '10px' }} className="eventsHostingHeader" gutterBottom>
+            Events I attended
+          </Typography>
+          {eventCards}
+        </div>
       </div>
     </div>
-
   )
 }
 
