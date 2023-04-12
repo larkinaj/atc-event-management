@@ -4,8 +4,21 @@ import eventController from '../controllers/eventController'
 
 const eventRouter = express.Router();
 
-eventRouter.get('/', (_req: Request, res: Response, _next: NextFunction) : void =>{
-    console.log('In eventRouter')
+eventRouter.get('/allEvents', eventController.getAllEvents, (_req: Request, res: Response, _next: NextFunction) : void =>{
+    res.status(200).json(res.locals.events);
 })
 
-export default eventRouter;
+eventRouter.get('/event/:event_id', eventController.getEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+    res.status(200).json(res.locals.event);
+})
+
+eventRouter.post('/event/:event_id', eventController.postEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+    res.status(200).json(res.locals.event);
+})
+
+eventRouter.delete('/event/:event_id', eventController.putEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+    res.status(200).json(res.locals.event);
+})
+
+
+export default eventRouter; 
