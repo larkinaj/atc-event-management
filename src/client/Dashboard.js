@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { IconButton, TextField, InputAdornment, Select, MenuItem, InputLabel, FormControl } from '@mui/material'
 import './styles/dashboard.css';
@@ -24,51 +24,12 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
 const Dashboard = () => {
-  const [searchQuery, setSearchQuery] = useState({
-    name: '',
-    date: [dayjs('2022-04-17'), dayjs('2022-04-21')],
-    industry: '',
-    eventType: '',
-  });
-
-  const searchEvents = (event) => {
-    console.log(searchQuery)
-
-  }
-
-  const searchChange = (event) => {
-    console.log('SEARCH CHANGE', event.target.value)
-    const searchCopy = structuredClone(searchQuery)
-    searchCopy.name = event.target.value
-    setSearchQuery(searchCopy);
-  }
-
-  const dateChange = (event) => {
-    console.log('DATE CHANGE', event)
-    const searchCopy = structuredClone(searchQuery)
-    searchCopy.date = event
-    setSearchQuery(searchCopy);
-  }
-
-  const industryChange = (event) => {
-    console.log('INDUSTRY CHANGE', event.target.value)
-    const searchCopy = structuredClone(searchQuery)
-    searchCopy.industry = event.target.value
-    setSearchQuery(searchCopy);
-  }
-
-  const eventTypeChange = (event) => {
-    console.log('EVENT TYPE CHANGE', event.target.value)
-    const searchCopy = structuredClone(searchQuery)
-    searchCopy.eventType = event.target.value
-    setSearchQuery(searchCopy);
-  }
 
   const testEvents = [
     {
       eventName: 'Codesmith Graduation Party',
       eventDate: 'September 9, 2023',
-      industry: 'Tech',
+      industry: 'Information Technology',
       eventType: 'Alumni Gathering',
       location: 'NYC',
       numAttendees: 32,
@@ -100,7 +61,7 @@ const Dashboard = () => {
     {
       eventName: 'AI & Machine Learning Expo',
       eventDate: 'October 25, 2023',
-      industry: 'Tech',
+      industry: 'Information Technology',
       eventType: 'Conference',
       location: 'Seattle',
       numAttendees: 350,
@@ -108,7 +69,7 @@ const Dashboard = () => {
     {
       eventName: 'Green Energy Symposium',
       eventDate: 'November 8, 2023',
-      industry: 'Energy',
+      industry: 'Information Technology',
       eventType: 'Conference',
       location: 'Austin',
       numAttendees: 250,
@@ -132,7 +93,7 @@ const Dashboard = () => {
     {
       eventName: 'Fashion Forward Expo',
       eventDate: 'February 18, 2024',
-      industry: 'Fashion',
+      industry: 'Entertainment',
       eventType: 'Conference',
       location: 'Paris',
       numAttendees: 300,
@@ -140,7 +101,7 @@ const Dashboard = () => {
       {
       eventName: 'Startup Pitch Night',
       eventDate: 'May 30, 2023',
-      industry: 'Business',
+      industry: 'Information Technology',
       eventType: 'Networking Meetup',
       location: 'San Francisco',
       numAttendees: 150,
@@ -156,7 +117,7 @@ const Dashboard = () => {
       {
       eventName: 'Gaming Convention',
       eventDate: 'September 15, 2023',
-      industry: 'Gaming',
+      industry: 'Entertainment',
       eventType: 'Exhibition',
       location: 'Tokyo',
       numAttendees: 1000,
@@ -178,6 +139,84 @@ const Dashboard = () => {
       numAttendees: 250,
       },
   ];
+
+  const [searchQuery, setSearchQuery] = useState({
+    name: '',
+    date: [dayjs('2022-04-17'), dayjs('2022-04-21')],
+    industry: '',
+    eventType: '',
+  });
+  const [eventCardsInfo, setEventCardsInfo] = useState([]);
+
+  const searchEvents = (event) => {
+    console.log(searchQuery)
+
+  }
+
+  const searchChange = (event) => {
+    console.log('SEARCH CHANGE', event.target.value)
+    const searchCopy = structuredClone(searchQuery)
+    searchCopy.name = event.target.value
+    setSearchQuery(searchCopy);
+  }
+
+  const dateChange = (event) => {
+    console.log('DATE CHANGE', event)
+    const searchCopy = structuredClone(searchQuery)
+    searchCopy.date = event
+    setSearchQuery(searchCopy);
+  }
+
+  const industryChange = (event) => {
+    console.log('INDUSTRY CHANGE', event.target.value)
+    const searchCopy = structuredClone(searchQuery)
+    searchCopy.industry = event.target.value
+    searchCopy.date = [dayjs('2022-04-17'), dayjs('2022-04-21')]
+    setSearchQuery(searchCopy);
+    const eventCards = testEvents.map((el) => {
+      if (el.industry === event.target.value || event.target.value ==='') {
+        return (
+          <Grid item xs={12} sm={6} md={4} lg={3} key={el.eventName}>
+            <div className="cardWrapper">
+              <Card sx={{ borderColor: 'rgba(119, 136, 153, 0.5)', borderWidth: 1, borderStyle: 'solid' }}> {/* #778899 with 50% opaqueness represented in rgba */}
+                <React.Fragment>
+                  <Box sx={{ height: 20, bgcolor: "#003366" }} />
+                  <CardContent className="eventCardContent">
+                    <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                      {el.eventDate}
+                    </Typography>
+                    <Typography variant="h5" component="div" sx={{ color: '#000000' }}>
+                      {el.eventName} {/* This should be a link that shows user more information about event */}
+                    </Typography>
+                    <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                      {el.location} | {el.industry} | {el.eventType}
+                    </Typography>
+                    <Typography variant="body2">
+                      {el.numAttendees} attendees
+                    </Typography>
+                  </CardContent>
+                  <CardActions>
+                    <Button size="small">RSVP</Button>
+                  </CardActions>
+                </React.Fragment>
+              </Card>
+            </div>
+          </Grid>
+        );
+      }
+    });
+    setEventCardsInfo(eventCards)
+  }
+
+  const eventTypeChange = (event) => {
+    console.log('EVENT TYPE CHANGE', event.target.value)
+    const searchCopy = structuredClone(searchQuery)
+    searchCopy.eventType = event.target.value
+    searchCopy.date = [dayjs('2022-04-17'), dayjs('2022-04-21')]
+    setSearchQuery(searchCopy);
+  }
+
+
 
   const eventCards = testEvents.map((event) => {
     return (
@@ -210,6 +249,11 @@ const Dashboard = () => {
     );
   });
 
+  useEffect(() => {
+    setEventCardsInfo(eventCards)
+  }, [])
+
+
   return (
     <div className="dashboard">
       <div className="queryBar">
@@ -235,6 +279,7 @@ const Dashboard = () => {
         <div className="search-items">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateRangePicker
+              className="search-date"
               localeText={{ start: 'Start Date', end: 'End Date' }}
               value={searchQuery.date}
               onChange={dateChange}
@@ -285,7 +330,7 @@ const Dashboard = () => {
       </div>
       <div className="eventCardsWrapper">
           <Grid container spacing={2}>
-            {eventCards}
+            {eventCardsInfo}
           </Grid>
       </div>
     </div>

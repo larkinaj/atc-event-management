@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 const app = express();
 
 import {fileURLToPath} from 'url';
@@ -13,6 +14,7 @@ import { Request, Response, NextFunction} from 'express';
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors());
 
 // catch-all route handler 
 app.use((_req: Request, res: Response): unknown => res.status(404).send('This is not the page you\'re looking for...'));
