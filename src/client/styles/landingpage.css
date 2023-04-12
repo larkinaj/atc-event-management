@@ -132,3 +132,7 @@ html, body {
   .signup {
     color: #778899;
   }
+
+  .loginInputs h2 {
+    color: #003366;
+  }
