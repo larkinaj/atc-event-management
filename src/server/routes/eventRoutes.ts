@@ -12,11 +12,15 @@ eventRouter.get('/event/:event_id', eventController.getEvent, (_req: Request, re
     res.status(200).json(res.locals.event);
 })
 
-eventRouter.post('/event/:event_id', eventController.postEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+eventRouter.post('/event', eventController.postEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
     res.status(200).json(res.locals.event);
 })
 
-eventRouter.delete('/event/:event_id', eventController.putEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+eventRouter.put('/event/:event_id', eventController.putEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+    res.status(200).json(res.locals.event);
+})
+
+eventRouter.delete('/event/:event_id', eventController.deleteEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
     res.status(200).json(res.locals.event);
 })
 

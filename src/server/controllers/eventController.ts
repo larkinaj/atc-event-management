@@ -19,9 +19,9 @@ const eventController = {
     },
     getEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
     try {
-        const {event_id} = req.body
+        const event_id = req.params.event_id 
         const request = 'SELECT * FROM events WHERE event_id = $1';
-            const values: number[] = [event_id];
+            const values: any[] = [event_id];
             const response: any = await query(request, values);
             res.locals.event = response.rows;
             return next();
@@ -51,9 +51,10 @@ const eventController = {
         },
         putEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
             try {
+                const event_id = req.params.event_id 
                 const {name, industry, event_type, description, host_id, total_attendees, location, status, date_time, picture} = req.body
-                const request = 'UPDATE events SET name = $1, industry = $2, event_type = $3, description = $4, host_id = $5, total_attendees =$6, location =$7, status = $8, date_time = $9, picture = $10 RETURNING *';
-                    const values: any[] = [name, industry, event_type, description, host_id, total_attendees, location, status, date_time, picture];
+                const request = 'UPDATE events SET name = $1, industry = $2, event_type = $3, description = $4, host_id = $5, total_attendees =$6, location =$7, status = $8, date_time = $9, picture = $10 WHERE event_id= $11 RETURNING *';
+                    const values: any[] = [name, industry, event_type, description, host_id, total_attendees, location, status, date_time, picture, event_id];
                     const response: any = await query(request, values);
                     res.locals.event = response.rows;
                     return next();
@@ -67,9 +68,9 @@ const eventController = {
             },
             deleteEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
                 try {
-                    const {event_id} = req.body
+                    const event_id = req.params.event_id 
                     const request = 'DELETE FROM events WHERE event_id = $1 RETURNING *';
-                        const values: number[] = [event_id];
+                        const values: any[] = [event_id];
                         const response: any = await query(request, values);
                         res.locals.event = response.rows;
                         return next();
