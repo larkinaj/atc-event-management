@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { IconButton, TextField, InputAdornment, Select, MenuItem, InputLabel, FormControl } from '@mui/material'
 import './styles/dashboard.css';
@@ -23,17 +23,66 @@ import Typography from '@mui/material/Typography';
 
 import Grid from '@mui/material/Grid';
 
+import readEventsRequest from './api/readEventsRequest';
+
 const Dashboard = () => {
+  
+  const [events, updateEvents] = React.useState([]); // Raw events array
+  const [eventCards, updateEventCards] = React.useState([]); // Array of event cards
+
+  useEffect(() => {
+    readEventsRequest().then((data)=>{
+      console.log(data)
+      updateEvents(data);
+      data = mapEvents(data);
+      updateEventCards(data)
+    });
+  }, []);
+
+  // Helper function for creating an array of event cards from the raw events array
+  const mapEvents = (eventsArray) => {
+    return eventsArray.map((event) => {
+      return (
+        <Grid item xs={12} sm={6} md={4} lg={3} key={event.event_name}>
+          <div className="cardWrapper">
+            <Card sx={{ borderColor: 'rgba(119, 136, 153, 0.5)', borderWidth: 1, borderStyle: 'solid' }}> {/* #778899 with 50% opaqueness represented in rgba */}
+              <React.Fragment>
+                <Box sx={{ height: 20, bgcolor: "#003366" }} />
+                <CardContent className="eventCardContent">
+                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                    {event.date_time}
+                  </Typography>
+                  <Typography variant="h5" component="div" sx={{ color: '#000000' }}>
+                    {event.event_name} {/* This should be a link that shows user more information about event */}
+                  </Typography>
+                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                    {event.event_location} | {event.industry} | {event.event_type}
+                  </Typography>
+                  <Typography variant="body2">
+                    {event.total_attendees} attendees
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small">Register</Button>
+                </CardActions>
+              </React.Fragment>
+            </Card>
+          </div>
+        </Grid>
+      );
+    });
+  };
+
+  // Filter by search value ==================
   const [searchQuery, setSearchQuery] = useState({
     name: '',
     date: [dayjs('2022-04-17'), dayjs('2022-04-21')],
     industry: '',
     eventType: '',
   });
-
+  
   const searchEvents = (event) => {
-    console.log(searchQuery)
-
+    console.log(searchQuery);
   }
 
   const searchChange = (event) => {
@@ -43,6 +92,7 @@ const Dashboard = () => {
     setSearchQuery(searchCopy);
   }
 
+  // Filter by date range ==================
   const dateChange = (event) => {
     console.log('DATE CHANGE', event)
     const searchCopy = structuredClone(searchQuery)
@@ -50,165 +100,31 @@ const Dashboard = () => {
     setSearchQuery(searchCopy);
   }
 
+  // Filter by industry ==================
   const industryChange = (event) => {
     console.log('INDUSTRY CHANGE', event.target.value)
     const searchCopy = structuredClone(searchQuery)
     searchCopy.industry = event.target.value
-    setSearchQuery(searchCopy);
+    searchCopy.date = [dayjs('2022-04-17'), dayjs('2022-04-21')]
+    setSearchQuery(searchCopy);  
+    const filteredEvents = events.reduce((acc, curr) => {
+      if (curr.industry === event.target.value || event.target.value ==='') {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+    const filteredEventCards = mapEvents(filteredEvents);
+    updateEventCards(filteredEventCards);
   }
 
+  // Filter by event type ==================
   const eventTypeChange = (event) => {
     console.log('EVENT TYPE CHANGE', event.target.value)
     const searchCopy = structuredClone(searchQuery)
     searchCopy.eventType = event.target.value
+    searchCopy.date = [dayjs('2022-04-17'), dayjs('2022-04-21')]
     setSearchQuery(searchCopy);
   }
-
-  const testEvents = [
-    {
-      eventName: 'Codesmith Graduation Party',
-      eventDate: 'September 9, 2023',
-      industry: 'Tech',
-      eventType: 'Alumni Gathering',
-      location: 'NYC',
-      numAttendees: 32,
-    },
-    {
-      eventName: 'Burger Conference',
-      eventDate: 'April 20, 2023',
-      industry: 'Food and Beverage',
-      eventType: 'Career Fair',
-      location: 'San Fransisco',
-      numAttendees: 237,
-    },
-    {
-      eventName: 'Healthcare Summit',
-      eventDate: 'June 15, 2023',
-      industry: 'Healthcare',
-      eventType: 'Conference',
-      location: 'Chicago',
-      numAttendees: 500,
-    },
-    {
-      eventName: 'Marketing Workshop',
-      eventDate: 'August 4, 2023',
-      industry: 'Marketing',
-      eventType: 'Webinar/Workshop',
-      location: 'Los Angeles',
-      numAttendees: 120,
-    },
-    {
-      eventName: 'AI & Machine Learning Expo',
-      eventDate: 'October 25, 2023',
-      industry: 'Tech',
-      eventType: 'Conference',
-      location: 'Seattle',
-      numAttendees: 350,
-    },
-    {
-      eventName: 'Green Energy Symposium',
-      eventDate: 'November 8, 2023',
-      industry: 'Energy',
-      eventType: 'Conference',
-      location: 'Austin',
-      numAttendees: 250,
-    },
-    {
-      eventName: 'Entertainment Industry Mixer',
-      eventDate: 'December 1, 2023',
-      industry: 'Entertainment',
-      eventType: 'Networking Meetup',
-      location: 'Los Angeles',
-      numAttendees: 200,
-    },
-    {
-      eventName: 'Financial Planning Workshop',
-      eventDate: 'January 12, 2024',
-      industry: 'Finance',
-      eventType: 'Webinar/Workshop',
-      location: 'Boston',
-      numAttendees: 80,
-    },
-    {
-      eventName: 'Fashion Forward Expo',
-      eventDate: 'February 18, 2024',
-      industry: 'Fashion',
-      eventType: 'Conference',
-      location: 'Paris',
-      numAttendees: 300,
-      },
-      {
-      eventName: 'Startup Pitch Night',
-      eventDate: 'May 30, 2023',
-      industry: 'Business',
-      eventType: 'Networking Meetup',
-      location: 'San Francisco',
-      numAttendees: 150,
-      },
-      {
-      eventName: 'Digital Marketing Trends Summit',
-      eventDate: 'July 23, 2023',
-      industry: 'Marketing',
-      eventType: 'Conference',
-      location: 'London',
-      numAttendees: 400,
-      },
-      {
-      eventName: 'Gaming Convention',
-      eventDate: 'September 15, 2023',
-      industry: 'Gaming',
-      eventType: 'Exhibition',
-      location: 'Tokyo',
-      numAttendees: 1000,
-      },
-      {
-      eventName: 'FoodTech Conference',
-      eventDate: 'October 12, 2023',
-      industry: 'Food and Beverage',
-      eventType: 'Conference',
-      location: 'Berlin',
-      numAttendees: 200,
-      },
-      {
-      eventName: 'LegalTech Summit',
-      eventDate: 'November 17, 2023',
-      industry: 'Legal',
-      eventType: 'Conference',
-      location: 'Washington DC',
-      numAttendees: 250,
-      },
-  ];
-
-  const eventCards = testEvents.map((event) => {
-    return (
-      <Grid item xs={12} sm={6} md={4} lg={3} key={event.eventName}>
-        <div className="cardWrapper">
-          <Card sx={{ borderColor: 'rgba(119, 136, 153, 0.5)', borderWidth: 1, borderStyle: 'solid' }}> {/* #778899 with 50% opaqueness represented in rgba */}
-            <React.Fragment>
-              <Box sx={{ height: 20, bgcolor: "#003366" }} />
-              <CardContent className="eventCardContent">
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                  {event.eventDate}
-                </Typography>
-                <Typography variant="h5" component="div" sx={{ color: '#000000' }}>
-                  {event.eventName} {/* This should be a link that shows user more information about event */}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                  {event.location} | {event.industry} | {event.eventType}
-                </Typography>
-                <Typography variant="body2">
-                  {event.numAttendees} attendees
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button size="small">RSVP</Button>
-              </CardActions>
-            </React.Fragment>
-          </Card>
-        </div>
-      </Grid>
-    );
-  });
 
   return (
     <div className="dashboard">
@@ -235,6 +151,7 @@ const Dashboard = () => {
         <div className="search-items">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateRangePicker
+              className="search-date"
               localeText={{ start: 'Start Date', end: 'End Date' }}
               value={searchQuery.date}
               onChange={dateChange}

@@ -2,10 +2,10 @@
 
 import { Strategy as LocalStrategy } from 'passport-local';
 import passport from 'passport';
-// import { query } from '../models/appModel';
-import db from '../appModel';
-import pkg from 'pg';
-import { QueryResult } from 'pg';
+import { query } from '../models/appModel';
+// import db from '../appModel';
+// import pkg from 'pg';
+// import { QueryResult } from 'pg';
 import userPass from './userPass';
 import express from 'express';
 
@@ -59,10 +59,10 @@ passport.use(new LocalStrategy({
         usernameField:"username",
         passwordField: "password"
     },
-    async function verify(username: string, password: string, done):Promise<unknown> {
+    async function (username: string, password: string, done):Promise<unknown> {
         try {
-            const sqlStr = `SELECT * FROM Users WHERE username = $1;`;
-            const queryRes = await db.query(sqlStr, [ username ]);
+            const sqlStr = `SELECT * FROM users WHERE username = $1;`;
+            const queryRes: any = await query(sqlStr, [ username ]);
             if (queryRes.rows[0]) {
                 // there is a matching user
                 const { password_:hashedPass } = queryRes.rows[0]; 
