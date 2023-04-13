@@ -2,9 +2,12 @@ import React from 'react';
 import { Container, Grid, Typography, Button, Paper, CardMedia } from '@mui/material';
 import { Box } from '@mui/system';
 import './styles/eventpage.css'
+import Header from './Header';
 
 const EventPage = () => {
   return (
+    <div>
+    <Header />
     <div className="event-page">
     <Container>
       <Box mb={3}>
@@ -56,7 +59,7 @@ const EventPage = () => {
               </Typography>
               <Box my={2}>
                 <Button variant="contained" color="primary" fullWidth>
-                  RSVP
+                  Register
                 </Button>
               </Box>
             </Box>
@@ -64,6 +67,7 @@ const EventPage = () => {
         </Grid>
       </Grid>
     </Container>
+    </div>
     </div>
   );
 };

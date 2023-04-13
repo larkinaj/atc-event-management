@@ -1,138 +1,111 @@
-@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
 
-* {
-    box-sizing: border-box;
-}
-
-html, body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Anuphan', sans-serif;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
 }
 
 .landing-page {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-  }
-  
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
 .left-section {
-    flex: 1 1 40%;
-    background-color: #003366;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  flex: 1 1 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .left-section h1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 20px;
-    z-index: 1;
-    color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 4px 4px 8px rgba(0, 0, 0, 0.6);
-}
-
-.right-section {
-    flex: 2 1 60%;
-    background-color: #FFFFFF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 4px 4px 8px rgba(0, 0, 0, 0.6);
+  /* Positions h1 in the top left corner with margin of 20 px */
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 20px;
+  /* When browser width shrinks significantly, the h1 will display over right section div */
+  z-index: 1;
 }
 
 .slogan {
-    background-color: #003366;
-    /* border-radius: 4px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-    padding: 50px 20px;
-    max-width: 400px; */
-    width: 100%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8), 4px 4px 8px rgba(0, 0, 0, 0.6);
+  color: white;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+  background-color: rgba(255, 255, 255, 0.4);
+  min-height: 400px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.events-list {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+.right-section {
+  background-color: #ffffff;
+  flex: 2 1 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Login card styles */
 .login-card {
-    background-color: white;
-    border-radius: 4px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
-    padding: 50px 20px;
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .login-card h1 {
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .login-card form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .login-card input {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-  
-  .login-card button {
-    background-color: #003366;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px;
-    cursor: pointer;
-    margin-top: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-  
-  .login-card button:hover {
-    background-color: #1e88e5;
-  }
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 50px 20px;
+  text-align: center;
+  height: 400px;
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .loginButtons {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    /* font-size: 11px; */
-  }
+.login-card h2 {
+  color: #003366;
+}
 
-  .signup {
-    color: #778899;
-  }
+.login-card input {
+  border: 1px solid rgba(119, 136, 153, 0.5);
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
-  .loginInputs h2 {
-    color: #003366;
-  }
+.login-card button {
+  background-color: #003366;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.login-card button:hover {
+  background-color: #ff7f50;
+  border: #ff7f50;
+}
+
+.loginButtons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+}
+
+.loginButtons a:visited {
+  color: #ff7f50;
+}

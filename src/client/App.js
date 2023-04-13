@@ -4,6 +4,7 @@ import LandingPage from "./LandingPage";
 import Dashboard from "./Dashboard";
 import EventPage from "./EventPage";
 import ProfilePage from "./ProfilePage";
+import EventCreation from "./EventCreation";
 
 const App = () => {
     return (
@@ -13,6 +14,7 @@ const App = () => {
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/eventpage" element={<EventPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
+                <Route path="/eventcreation" element={<EventCreation />} />
             </Routes>
         </div>
     )

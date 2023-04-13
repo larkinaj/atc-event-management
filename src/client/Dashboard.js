@@ -25,6 +25,8 @@ import Grid from '@mui/material/Grid';
 
 import readEventsRequest from './api/readEventsRequest';
 
+import Header from './Header';
+
 const Dashboard = () => {
   
   const [events, updateEvents] = React.useState([]); // Raw events array
@@ -128,6 +130,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
+      <Header />
       <div className="queryBar">
         <div className="search-items">
           <TextField
