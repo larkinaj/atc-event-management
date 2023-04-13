@@ -110,12 +110,6 @@ const ProfilePage = () => {
         </div>
         <div>
           <Typography sx={{ fontSize: 20, fontWeight: 'bold', margin: '10px' }} className="eventsHostingHeader" gutterBottom>
-            Events I'm following
-          </Typography>
-          {eventCards}
-        </div>
-        <div>
-          <Typography sx={{ fontSize: 20, fontWeight: 'bold', margin: '10px' }} className="eventsHostingHeader" gutterBottom>
             Events I attended
           </Typography>
           {eventCards}
