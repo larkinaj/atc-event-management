@@ -1,5 +1,6 @@
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 const app = express();
 
 import {fileURLToPath} from 'url';
@@ -16,6 +17,7 @@ import api from './routes/api'
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors());
 
 // use api router for all route requests
 app.use('/api', api);
