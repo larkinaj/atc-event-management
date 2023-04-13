@@ -20,7 +20,7 @@ const eventController = {
     getEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
     try {
         const event_id = req.params.event_id 
-        const request = 'SELECT * FROM events WHERE event_id = $1';
+        const request = 'SELECT * FROM Events WHERE event_id = $1';
             const values: any[] = [event_id];
             const response: any = await query(request, values);
             res.locals.event = response.rows;
@@ -35,9 +35,9 @@ const eventController = {
     }, 
     postEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
         try {
-            const {name, industry, event_type, description, host_id, total_attendees, location, status, date_time, picture} = req.body
-            const request = 'INSERT INTO events (name, industry, event_type, description, host_id, total_attendees, location, status, date_time, picture) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *';
-                const values: any[] = [name, industry, event_type, description, host_id, total_attendees, location, status, date_time, picture];
+            const {event_name, industry, event_type, event_description, host_id, total_attendees, event_location, event_status, date_time, event_price} = req.body
+            const request = 'INSERT INTO Events (event_name, industry, event_type, event_description, host_id, total_attendees, event_location, event_status, date_time, event_price) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *';
+                const values: any[] = [event_name, industry, event_type, event_description, host_id, total_attendees, event_location, event_status, date_time, event_price];
                 const response: any = await query(request, values);
                 res.locals.event = response.rows;
                 return next();
@@ -52,9 +52,9 @@ const eventController = {
         putEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
             try {
                 const event_id = req.params.event_id 
-                const {name, industry, event_type, description, host_id, total_attendees, location, status, date_time, picture} = req.body
-                const request = 'UPDATE events SET name = $1, industry = $2, event_type = $3, description = $4, host_id = $5, total_attendees =$6, location =$7, status = $8, date_time = $9, picture = $10 WHERE event_id= $11 RETURNING *';
-                    const values: any[] = [name, industry, event_type, description, host_id, total_attendees, location, status, date_time, picture, event_id];
+                const {event_name, industry, event_type, event_description, host_id, total_attendees, event_location, event_status, date_time, event_price} = req.body
+                const request = 'UPDATE Events SET event_name = $1, industry = $2, event_type = $3, event_description = $4, host_id = $5, total_attendees =$6, event_location = $7, event_status = $8, date_time = $9, event_price = $10 WHERE event_id= $11 RETURNING *';
+                    const values: any[] = [event_name, industry, event_type, event_description, host_id, total_attendees, event_location, event_status, date_time, event_price, event_id];
                     const response: any = await query(request, values);
                     res.locals.event = response.rows;
                     return next();
@@ -69,7 +69,7 @@ const eventController = {
             deleteEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
                 try {
                     const event_id = req.params.event_id 
-                    const request = 'DELETE FROM events WHERE event_id = $1 RETURNING *';
+                    const request = 'DELETE FROM Events WHERE event_id = $1 RETURNING *';
                         const values: any[] = [event_id];
                         const response: any = await query(request, values);
                         res.locals.event = response.rows;

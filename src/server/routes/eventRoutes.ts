@@ -8,19 +8,19 @@ eventRouter.get('/allEvents', eventController.getAllEvents, (_req: Request, res:
     res.status(200).json(res.locals.events);
 })
 
-eventRouter.get('/event/:event_id', eventController.getEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+eventRouter.get('/:event_id', eventController.getEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
     res.status(200).json(res.locals.event);
 })
 
-eventRouter.post('/event', eventController.postEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+eventRouter.post('/', eventController.postEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
     res.status(200).json(res.locals.event);
 })
 
-eventRouter.put('/event/:event_id', eventController.putEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+eventRouter.put('/:event_id', eventController.putEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
     res.status(200).json(res.locals.event);
 })
 
-eventRouter.delete('/event/:event_id', eventController.deleteEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
+eventRouter.delete('/:event_id', eventController.deleteEvent, (_req: Request, res: Response, _next: NextFunction) : void =>{
     res.status(200).json(res.locals.event);
 })
 
