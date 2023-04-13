@@ -1,15 +1,15 @@
 // implement encryption of passwords here 
 
-import { bcrypt } from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const SALT_FACTOR = 8;  // bcrypt salt factor
 
 const userPass = {
 
-    hashPass: async (newPass:string):Promise<string | Error> => {
+    hashPass: (newPass:string):Promise<string | Error> => {
 
         return bcrypt.genSalt(SALT_FACTOR)
-            .then((newPass, salt: string | number):Promise<string> => {return bcrypt.hash(newPass, salt)})
+            .then((salt: string | number):Promise<string> => {return bcrypt.hash(newPass, salt)})
                 .then((hashed: string):string => {return hashed;})
                     .catch((err:Error):Error => {return err;});
 

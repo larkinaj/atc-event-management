@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import passport from 'passport';
 import './helpers/passport-config';
+import userRoutes from './routes/userRoutes';
 const app = express();
 
 import {fileURLToPath} from 'url';
@@ -20,6 +21,7 @@ app.use(express.urlencoded({extended: true}));
 
 
 // MOUNT ALL ROUTES HERE (ORDER MATTERS)
+app.use('/api', userRoutes);
 
 // catch-all route handler 
 app.use((_req: Request, res: Response): unknown => res.status(404).send('This is not the page you\'re looking for...'));

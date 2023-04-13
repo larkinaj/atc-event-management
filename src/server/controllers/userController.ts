@@ -1,14 +1,15 @@
 // user auth controllers for anna 
 
 import { Request, Response, NextFunction} from 'express';
-import { query } from '../models/appModel'; 
+// import { query } from '../models/appModel'; 
+import db from '../appModel';
 import userPass from '../helpers/userPass';
 
 // description is optional 
-const required = [username, password, first_name, last_name, email, industry];
-const edits = [first_name, last_name, email, bio, industry];
+const required = ['username', 'password', 'first_name', 'last_name', 'email', 'industry'];
+const edits = ['first_name', 'last_name', 'email', 'bio', 'industry'];
 
-userController = {
+const userController = {
 
     createUser: async (req: Request, res:Response, next:NextFunction):Promise<unknown> => {
         try {
@@ -31,8 +32,8 @@ userController = {
             VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *;`;
 
-            const queryRes = await query(sqlStr, newUser);
-            if (queryRes) { 
+            const queryRes = await db.query(sqlStr, newUser);
+            if (queryRes.rows[0]) { 
                 // should only be true if queryRes is not empty
                 res.locals.authSuccess = true;
             }  
@@ -45,10 +46,10 @@ userController = {
 
     },
 
-    getUser: async (req: Request, res:Response, next:NextFunction):Promise<unknown> => {
-        // if you want to navigate to another user's profile and retrieve their information 
+    // getUser: async (req: Request, res:Response, next:NextFunction):Promise<unknown> => {
+    //     // if you want to navigate to another user's profile and retrieve their information 
         
-    },
+    // },
 
 };
 
