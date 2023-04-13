@@ -7,6 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import WorkIcon from '@mui/icons-material/Work';
+import axios from 'axios';
 
 const LandingPage = () => {
   const loginUser = (event) => {
@@ -36,7 +37,16 @@ const LandingPage = () => {
     'Professional conferences',
     'Webinars and workshops'
   ];
-  
+    
+  const testRequest = () => {
+    return fetch(`http://localhost:3000/api/login`, {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then((data) => console.log("data from fetch: ", data));
+  };
+  testRequest();
+
   return (
       <div className="landing-page">
           <div className="left-section">

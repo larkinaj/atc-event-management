@@ -1,0 +1,33 @@
+.profile-page {
+  display: flex;
+  margin-top: 100px;
+}
+
+.user-info-column {
+  flex: 1 1 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-events-column {
+  flex: 2 1 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardWrapper {
+  min-width: 600px;
+  margin: 10px;
+}
+
+.eventCardContent {
+  width: 100%;
+  height: 120px;
+  margin-bottom: 16px;
+}
+
+.eventsHostingHeader {
+  align-self: self-start;
+}
