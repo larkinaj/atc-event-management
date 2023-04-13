@@ -9,9 +9,8 @@ CREATE TABLE Events (
     event_location text NOT NULL,
     event_status boolean NOT NULL,
     date_time timestamp NOT NULL,
-    event_price integer,
-
-    picture bytea NOT NULL
+    event_price integer NOT NULL,
+    picture bytea
 ) WITH (
     OIDS = False
 );
