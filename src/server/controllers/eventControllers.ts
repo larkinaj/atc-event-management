@@ -1,1 +1,0 @@
-// event controller for Kareem 
