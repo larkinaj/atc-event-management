@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "./LandingPage";
 import Dashboard from "./Dashboard";
 import EventPage from "./EventPage";
+import ProfilePage from "./ProfilePage";
 
 const App = () => {
     return (
@@ -11,6 +12,7 @@ const App = () => {
                 <Route path="/" element={<LandingPage />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/eventpage" element={<EventPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
             </Routes>
         </div>
     )
