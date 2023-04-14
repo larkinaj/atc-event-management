@@ -6,10 +6,6 @@ html, body {
     font-family: 'Poppins', sans-serif;
 }
 
-.searchEventDropdown {
-  min-width: 150px;
-}
-
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -20,9 +16,13 @@ html, body {
 .queryBar {
   display: flex;
   align-items: center;
-  margin: 3rem;
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+  justify-content: center;
+  margin: 2rem !important;
+}
+
+.search-items {
+  margin: 0.25rem !important;
+  padding: 0 !important;
 }
 
 #search-bar {
@@ -30,27 +30,21 @@ html, body {
   padding: 16.5px;
 }
 
-.search-items {
-  margin: 10px;
-}
-
 .search-date {
   width: 300px;
 }
 
-.cardWrapper {
-  max-width: 400px;
-  margin: 8px;
+.searchEventDropdown {
+  min-width: 150px;
 }
 
 .eventCardContent {
-  width: 300px;
+  width: 95%; /* Screen shrink handling */
   height: 150px;
-  margin-bottom: 16px;
   padding: 8px !important;
 }
 
-.eventCardsWrapper {
-  margin-left: 5rem;
-  margin-right: 5rem;
+.allCardsWrapper {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
 }

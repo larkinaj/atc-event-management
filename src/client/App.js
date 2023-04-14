@@ -13,7 +13,19 @@ const theme = createTheme({
   typography: {
     fontFamily: "'Poppins', sans-serif",
   },
+  spacing: 8,
+  overrides: {
+    MuiGrid: {
+      container: {
+        margin: '0.5rem',
+      },
+      item: {
+        margin: '0.5rem',
+      },
+    },
+  },
 });
+
 
 const App = () => {
   return (
