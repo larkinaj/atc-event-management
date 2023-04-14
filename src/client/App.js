@@ -37,19 +37,31 @@ const App = () => {
     priceOfEvent: '',
     imageOfEvent: '',
   })
+  const [currentUser, setCurrentUser] = useState({
+    user_id: 1,
+    username: "stekim4",
+    password_: "",
+    first_name: "Steven",
+    last_name: "Kim",
+    email: "steven.kim@codesmith.io",
+    bio: "Hi my name is Steven.",
+    industry: "Information Technology",
+    user_resume: null,
+    picture: null,
+  })
 
   return (
     <ThemeProvider theme={theme}>
       <div>
         <Routes>
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<LandingPage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/eventpage" element={<EventPage />} />
-          <Route path="/profile" element={<ProfilePage eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
-          <Route path="/create-event" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
+          <Route path={`/profile/${currentUser.username}`} element={<ProfilePage currentUser={currentUser} eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
+          <Route path="/create-event" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} currentUser={currentUser} />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/reset" element={<ForgotPassword />} />
-          <Route path="/edit-event/:id" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
+          <Route path="/edit-event/:id" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} currentUser={currentUser} />} />
         </Routes>
       </div>
     </ThemeProvider>

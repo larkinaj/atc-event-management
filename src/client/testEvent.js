@@ -2,7 +2,7 @@ const testEvents = [
   {
     event_id: 1,
     event_name: 'Codesmith Graduation Party',
-    date_time: 'Sat Sep 9 2023 16:00',
+    date_time: 'Sat Sep 09 2023 16:00',
     industry: 'Information Technology',
     event_type: 'Alumni Gathering',
     event_location: 'NYC',
@@ -29,7 +29,7 @@ const testEvents = [
   {
     event_id: 4,
     event_name: 'Marketing Workshop',
-    date_time: 'Fri Aug 4 2023 11:00',
+    date_time: 'Fri Aug 04 2023 11:00',
     industry: 'Marketing',
     event_type: 'Webinar/Workshop',
     event_location: 'Los Angeles',
@@ -47,7 +47,7 @@ const testEvents = [
   {
     event_id: 6,
     event_name: 'Green Energy Symposium',
-    date_time: 'Wed Nov 8 2023 10:00',
+    date_time: 'Wed Nov 08 2023 10:00',
     industry: 'Information Technology',
     event_type: 'Conference',
     event_location: 'Austin',
@@ -56,7 +56,7 @@ const testEvents = [
   {
     event_id: 7,
     event_name: 'Entertainment Industry Mixer',
-    date_time: 'Fri Dec 1 2023 18:00',
+    date_time: 'Fri Dec 01 2023 18:00',
     industry: 'Entertainment',
     event_type: 'Networking Meetup',
     event_location: 'Los Angeles',
@@ -101,7 +101,7 @@ const testEvents = [
   {
     event_id: 12,
     event_name: 'Gaming Convention',
-    date_time: 'Thu Jun 1 2023 17:00',
+    date_time: 'Thu Jun 01 2023 17:00',
     industry: 'Entertainment',
     event_type: 'Exhibition',
     event_location: 'Tokyo',
@@ -110,7 +110,7 @@ const testEvents = [
   {
     event_id: 13,
     event_name: 'FoodTech Conference',
-    date_time: 'Fri Jun 2 2023 17:00',
+    date_time: 'Fri Jun 02 2023 17:00',
     industry: 'Food and Beverage',
     event_type: 'Conference',
     event_location: 'Berlin',
