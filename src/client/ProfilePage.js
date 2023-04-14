@@ -1,30 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button, Typography, InputAdornment, CardContent, Avatar, Box, Card } from '@mui/material'
 import './styles/profile-page.css';
 import { BoltRounded, Search, Description } from '@mui/icons-material'; // default exports vs named exports
 import readEventsRequest from './api/readEventsRequest';
 
-const ProfilePage = () => {
-  function stringToColor(string) {
-    let hash = 0;
-    let i;
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    let color = '#';
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    /* eslint-enable no-bitwise */
-    return color;
-  }
+const ProfilePage = (props) => {
+  const navigate = useNavigate();
   function stringAvatar(name) {
     return {
       sx: {
-        bgcolor: stringToColor(name),
+        bgcolor: '#003366',
         width: 150, height: 150,
         fontSize: '45px',
         margin: '15px'
@@ -36,16 +22,43 @@ const ProfilePage = () => {
   const [eventsHosting, updateEventsHosting] = React.useState([]); // Raw events array
 
   useEffect(() => {
-    readEventsRequest().then((data)=>{
-      console.log(data);
-      data = mapEvents(data);
-      updateEventsHosting(data)
-    });
+    // readEventsRequest().then((data)=>{
+    //   console.log(data);
+    //   data = mapEvents(data);
+    //   updateEventsHosting(data)
+    // });
   }, []);
+
+  const editEventButton = (event) => {
+    props.setEventDetails({
+      nameOfEvent: event.eventName,
+      industryOfEvent: event.industry,
+      typeOfEvent: event.eventType,
+      descriptionOfEvent: '',
+      locationOfEvent: event.location,
+      priceOfEvent: '',
+      imageOfEvent: '',
+    })
+    navigate("/edit-event/" + event.event_id)
+  }
+
+  const createEventButton = (event) => {
+    props.setEventDetails({
+      nameOfEvent: '',
+      industryOfEvent: '',
+      typeOfEvent: '',
+      descriptionOfEvent: '',
+      locationOfEvent: '',
+      priceOfEvent: '',
+      imageOfEvent: '',
+    })
+    navigate("/create-event")
+  }
 
 
   const testEvents = [
     {
+      event_id: 1,
       eventName: 'Codesmith Graduation Party',
       eventDate: 'September 9, 2023',
       industry: 'Information Technology',
@@ -54,6 +67,7 @@ const ProfilePage = () => {
       numAttendees: 32,
     },
     {
+      event_id: 2,
       eventName: 'Burger Conference',
       eventDate: 'April 20, 2023',
       industry: 'Food and Beverage',
@@ -63,10 +77,9 @@ const ProfilePage = () => {
     },
   ]
 
-  const eventCards = testEvents.map((event) => {
-    if (event)
+  const eventCards = testEvents.map((event, i) => {
     return (
-      <div className="cardWrapperProfile">
+      <div className="cardWrapperProfile" key={i}>
         <Card sx={{ borderColor: 'rgba(119, 136, 153, 0.5)', borderWidth: 1, borderStyle: 'solid' }}> {/* #778899 with 50% opaqueness represented in rgba */}
           <React.Fragment>
             <Box sx={{ height: 15, bgcolor: "#003366" }} />
@@ -83,7 +96,7 @@ const ProfilePage = () => {
               <Typography variant="body2" sx={{ fontSize: 14 }}>
                 {event.numAttendees} attendees
               </Typography>
-              <Button>Edit Event</Button>
+              <Button onClick={()=>editEventButton(event)}>Edit Event</Button>
             </CardContent>
           </React.Fragment>
         </Card>
@@ -104,7 +117,7 @@ const ProfilePage = () => {
           larkin.aj@gmail.com
         </Typography>
         <Button>Edit User Info</Button>
-        <Button>Create Event</Button>
+        <Button onClick={createEventButton}>Create Event</Button>
         <Button>
           Upload resume
           <Description/>

@@ -1,0 +1,43 @@
+.createEventPage {
+  display: flex;
+  justify-content: center;
+
+  flex-direction: column;
+  align-items: center;
+}
+
+.createEventHeader {
+  margin-top: 160px;
+}
+
+.createEventBox {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:center;
+  width: 60%;
+  border-radius: 15px;
+  box-shadow: 2px 2px 4px #000000
+}
+
+.createEventInput {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.createEventLeft {
+  display: flex;
+  flex: row;
+  width: 220px;
+  /* margin-right: 200px; */
+}
+
+.createEventRight {
+  display: flex;
+  flex: row;
+  /* width: 100%; */
+  justify-content: start;
+  /* margin-left: 200px; */
+}
+
