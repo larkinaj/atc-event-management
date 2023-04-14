@@ -108,6 +108,7 @@ const userController = {
 
         console.log('req params: ', req.params);
         console.log('req user: ', req.user);
+        console.log('req session: ', req.session);
 
         try {
 
@@ -118,7 +119,8 @@ const userController = {
             email = $3,
             bio = $4,
             industry = $5
-            WHERE user_id = $6;`;
+            WHERE user_id = $6
+            RETURNING *;`;
             for (let i = 0; i < edits.length; i++) {
                 if (!req.body[edits[i]]) {
                     // DEFAULT ON FORM = POPULATED WITH ALREADY EXISTING INFO
@@ -135,7 +137,7 @@ const userController = {
             }
 
             sqlVars.push(req.user.user_id);
-            res.locals.loggedIn = true;
+            res.locals.loggedIn = true;  
             const queryRes: any = await query(sqlStr, sqlVars); 
             if (queryRes.rows[0]) res.locals.editedUser = queryRes.rows[0]; 
             return next();
