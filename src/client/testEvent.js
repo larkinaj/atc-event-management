@@ -1,5 +1,6 @@
 const testEvents = [
   {
+    event_id: 1,
     event_name: 'Codesmith Graduation Party',
     date_time: 'September 9, 2023',
     industry: 'Information Technology',
@@ -8,6 +9,7 @@ const testEvents = [
     total_attendees: 32,
   },
   {
+    event_id: 2,
     event_name: 'Burger Conference',
     date_time: 'April 20, 2023',
     industry: 'Food and Beverage',
@@ -16,6 +18,7 @@ const testEvents = [
     total_attendees: 237,
   },
   {
+    event_id: 3,
     event_name: 'Healthcare Summit',
     date_time: 'June 15, 2023',
     industry: 'Healthcare',
@@ -24,6 +27,7 @@ const testEvents = [
     total_attendees: 500,
   },
   {
+    event_id: 4,
     event_name: 'Marketing Workshop',
     date_time: 'August 4, 2023',
     industry: 'Marketing',
@@ -32,6 +36,7 @@ const testEvents = [
     total_attendees: 120,
   },
   {
+    event_id: 5,
     event_name: 'AI & Machine Learning Expo',
     date_time: 'October 25, 2023',
     industry: 'Information Technology',
@@ -40,6 +45,7 @@ const testEvents = [
     total_attendees: 350,
   },
   {
+    event_id: 6,
     event_name: 'Green Energy Symposium',
     date_time: 'November 8, 2023',
     industry: 'Information Technology',
@@ -48,6 +54,7 @@ const testEvents = [
     total_attendees: 250,
   },
   {
+    event_id: 7,
     event_name: 'Entertainment Industry Mixer',
     date_time: 'December 1, 2023',
     industry: 'Entertainment',
@@ -56,6 +63,7 @@ const testEvents = [
     total_attendees: 200,
   },
   {
+    event_id: 8,
     event_name: 'Financial Planning Workshop',
     date_time: 'January 12, 2024',
     industry: 'Finance',
@@ -64,53 +72,59 @@ const testEvents = [
     total_attendees: 80,
   },
   {
+    event_id: 9,
     event_name: 'Fashion Forward Expo',
     date_time: 'February 18, 2024',
     industry: 'Entertainment',
     event_type: 'Conference',
     event_location: 'Paris',
     total_attendees: 300,
-    },
-    {
+  },
+  {
+    event_id: 10,
     event_name: 'Startup Pitch Night',
     date_time: 'May 30, 2023',
     industry: 'Information Technology',
     event_type: 'Networking Meetup',
     event_location: 'San Francisco',
     total_attendees: 150,
-    },
-    {
+  },
+  {
+      event_id: 11,
     event_name: 'Digital Marketing Trends Summit',
     date_time: 'July 23, 2023',
     industry: 'Marketing',
     event_type: 'Conference',
     event_location: 'London',
     total_attendees: 400,
-    },
-    {
+  },
+  {
+    event_id: 12,
     event_name: 'Gaming Convention',
     date_time: 'September 15, 2023',
     industry: 'Entertainment',
     event_type: 'Exhibition',
     event_location: 'Tokyo',
     total_attendees: 1000,
-    },
-    {
+  },
+  {
+    event_id: 13,
     event_name: 'FoodTech Conference',
     date_time: 'October 12, 2023',
     industry: 'Food and Beverage',
     event_type: 'Conference',
     event_location: 'Berlin',
     total_attendees: 200,
-    },
-    {
+  },
+  {
+    event_id: 14,
     event_name: 'LegalTech Summit',
     date_time: 'November 17, 2023',
     industry: 'Legal',
     event_type: 'Conference',
     event_location: 'Washington DC',
     total_attendees: 250,
-    },
+  },
 ];
 
 export default testEvents
