@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Button, Typography, InputAdornment, CardContent, Avatar, Box, Card } from '@mui/material'
 import './styles/profile-page.css';
 import { BoltRounded, Search, Description } from '@mui/icons-material'; // default exports vs named exports
+import readEventsRequest from './api/readEventsRequest';
 
 const ProfilePage = () => {
   function stringToColor(string) {
@@ -32,6 +33,17 @@ const ProfilePage = () => {
     };
   }
 
+  const [eventsHosting, updateEventsHosting] = React.useState([]); // Raw events array
+
+  useEffect(() => {
+    readEventsRequest().then((data)=>{
+      console.log(data);
+      data = mapEvents(data);
+      updateEventsHosting(data)
+    });
+  }, []);
+
+
   const testEvents = [
     {
       eventName: 'Codesmith Graduation Party',
@@ -52,12 +64,13 @@ const ProfilePage = () => {
   ]
 
   const eventCards = testEvents.map((event) => {
+    if (event)
     return (
-      <div className="cardWrapper">
+      <div className="cardWrapperProfile">
         <Card sx={{ borderColor: 'rgba(119, 136, 153, 0.5)', borderWidth: 1, borderStyle: 'solid' }}> {/* #778899 with 50% opaqueness represented in rgba */}
           <React.Fragment>
             <Box sx={{ height: 15, bgcolor: "#003366" }} />
-            <CardContent className="eventCardContent">
+            <CardContent className="eventCardContentProfile">
               <Typography sx={{ fontSize: 14, margin: '0px' }} color="text.secondary" gutterBottom>
                 {event.eventDate}
               </Typography>
@@ -70,6 +83,7 @@ const ProfilePage = () => {
               <Typography variant="body2" sx={{ fontSize: 14 }}>
                 {event.numAttendees} attendees
               </Typography>
+              <Button>Edit Event</Button>
             </CardContent>
           </React.Fragment>
         </Card>
@@ -90,6 +104,7 @@ const ProfilePage = () => {
           larkin.aj@gmail.com
         </Typography>
         <Button>Edit User Info</Button>
+        <Button>Create Event</Button>
         <Button>
           Upload resume
           <Description/>

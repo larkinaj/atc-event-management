@@ -20,7 +20,7 @@ const eventController = {
     getEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
     try {
         const event_id = req.params.event_id 
-        const request = 'SELECT * FROM events WHERE event_id = $1';
+        const request = 'SELECT * FROM Events WHERE event_id = $1';
             const values: any[] = [event_id];
             const response: any = await query(request, values);
             res.locals.event = response.rows;
@@ -68,7 +68,7 @@ const eventController = {
             deleteEvent : async (req: Request, res: Response, next: NextFunction): Promise<unknown>=>  {
                 try {
                     const event_id = req.params.event_id 
-                    const request = 'DELETE FROM events WHERE event_id = $1 RETURNING *';
+                    const request = 'DELETE FROM Events WHERE event_id = $1 RETURNING *';
                         const values: any[] = [event_id];
                         const response: any = await query(request, values);
                         res.locals.event = response.rows;

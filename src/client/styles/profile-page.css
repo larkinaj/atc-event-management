@@ -17,14 +17,14 @@
   align-items: center;
 }
 
-.cardWrapper {
+.cardWrapperProfile {
   min-width: 600px;
   margin: 10px;
 }
 
-.eventCardContent {
+.eventCardContentProfile {
   width: 100%;
-  height: 120px;
+  height: 155px;
   margin-bottom: 16px;
 }
 
