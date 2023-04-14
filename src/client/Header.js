@@ -15,7 +15,7 @@ const Header = () => {
           CareerConnect
         </Typography>
         <Box>
-          <Button component={RouterLink} to="/create" sx={{ color: '#ffffff', textDecoration: 'none' }}>
+          <Button component={RouterLink} to="/create-event" sx={{ color: '#ffffff', textDecoration: 'none' }}>
             Create Event
           </Button>
           <Button component={RouterLink} to="/help" sx={{ color: '#ffffff', textDecoration: 'none' }}>
