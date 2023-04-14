@@ -104,15 +104,39 @@ const Dashboard = () => {
   // Filter by search value ==================
   const [searchQuery, setSearchQuery] = useState({
     name: "",
-    date: [dayjs("2022-04-17"), dayjs("2022-04-21")],
     industry: "",
     eventType: "",
   });
   const [searchDate, setSearchDate] = useState([dayjs(), dayjs()])
 
   const searchEvents = (event) => {
-
     console.log(searchQuery);
+    console.log(searchDate);
+    let filteredEvents = events.reduce((acc, curr) => {
+      if (curr.industry === searchQuery.industry || searchQuery.industry === '') {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+    filteredEvents = filteredEvents.reduce((acc, curr) => {
+      if (curr.event_type === searchQuery.eventType || searchQuery.eventType === '') {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+    filteredEvents = filteredEvents.reduce((acc, curr) => {
+      if (curr.event_name.toLowerCase().includes(searchQuery.name.toLowerCase())|| searchQuery.name === '') {
+        acc.push(curr);
+      }
+      return acc;
+    }, []);
+    filteredEvents = filteredEvents.sort((a, b) => {
+      let testA = new Date(dateConverter(a.date_time))
+      let testB = new Date(dateConverter(b.date_time))
+      
+    })
+    const filteredEventCards = mapEvents(filteredEvents);
+    updateEventCards(filteredEventCards);
   };
 
   const searchChange = (event) => {
@@ -124,6 +148,7 @@ const Dashboard = () => {
 
   // Filter by date range ==================
   const dateChange = (event) => {
+    console.log("DATE CHANGE", event[0].$d)
     console.log("DATE CHANGE", event);
     setSearchDate(event)
   };
@@ -134,14 +159,14 @@ const Dashboard = () => {
     const searchCopy = structuredClone(searchQuery);
     searchCopy.industry = event.target.value;
     setSearchQuery(searchCopy);
-    const filteredEvents = events.reduce((acc, curr) => {
-      if (curr.industry === event.target.value || event.target.value === "") {
-        acc.push(curr);
-      }
-      return acc;
-    }, []);
-    const filteredEventCards = mapEvents(filteredEvents);
-    updateEventCards(filteredEventCards);
+    // const filteredEvents = events.reduce((acc, curr) => {
+    //   if ((curr.industry === searchCopy.industry && curr.event_type === searchCopy.eventType)|| event.target.value === "") {
+    //     acc.push(curr);
+    //   }
+    //   return acc;
+    // }, []);
+    // const filteredEventCards = mapEvents(filteredEvents);
+    // updateEventCards(filteredEventCards);
   };
 
   // Filter by event type ==================
@@ -150,14 +175,14 @@ const Dashboard = () => {
     const searchCopy = structuredClone(searchQuery);
     searchCopy.eventType = event.target.value;
     setSearchQuery(searchCopy);
-    const filteredEvents = events.reduce((acc, curr) => {
-      if (curr.event_type === event.target.value || event.target.value === "") {
-        acc.push(curr);
-      }
-      return acc;
-    }, []);
-    const filteredEventCards = mapEvents(filteredEvents);
-    updateEventCards(filteredEventCards);
+    // const filteredEvents = events.reduce((acc, curr) => {
+    //   if ((curr.industry === searchCopy.industry && curr.event_type === searchCopy.eventType) || event.target.value === "") {
+    //     acc.push(curr);
+    //   }
+    //   return acc;
+    // }, []);
+    // const filteredEventCards = mapEvents(filteredEvents);
+    // updateEventCards(filteredEventCards);
   };
 
   return (
