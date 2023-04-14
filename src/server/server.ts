@@ -17,10 +17,11 @@ const PORT = 3000;
 // import types
 import { Request, Response, NextFunction } from 'express';
 
-app.use(cors({
-  origin: "http://localhost:8080",   // <-- where React app is located
-  credentials: true
-}));
+// app.use(cors({
+//   origin: "http://localhost:8080",   // <-- where React app is located
+//   credentials: true
+// }));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -29,11 +30,11 @@ app.use(express.urlencoded({extended: true}));
 // Option for session
 let sessOpts = {
   secret: "secret cookie",
-  resave: true,
+  resave: false,
   saveUninitialized: false,
   cookie: {
       "secure": false,
-      "maxAge": 1200000
+      "maxAge": 3600000
   }
 };
 

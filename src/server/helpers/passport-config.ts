@@ -3,9 +3,6 @@
 import { Strategy as LocalStrategy } from 'passport-local';
 import passport from 'passport';
 import { query } from '../models/appModel';
-// import db from '../appModel';
-// import pkg from 'pg';
-// import { QueryResult } from 'pg';
 import userPass from './userPass';
 import express from 'express';
 
@@ -40,8 +37,8 @@ passport.serializeUser(function (user:Express.User, done):void {
         bio: user.bio,
         industry: user.industry
     })
-    // outlines the fields SAVED to an active session ONTO req.session.passport.user.{...}
-    // yields control to DESERIALIZE()
+    // STARTS a session and saves the defined fields ONTO req.session.passport.user.{...}
+
 });
 
 // deserializes user for session auth (req.user prop is set to yielded info)
@@ -49,9 +46,9 @@ passport.serializeUser(function (user:Express.User, done):void {
 passport.deserializeUser(function (user:Express.User, done):void {
     console.log('deserialized user');
     return done(null, user);
-    // ATTACHES the userObject in SERIALIZE() to req.user.{...}
+    // ATTACHES the userObject to req.user.{...}
     // req.user now contains the authenticated user object for the entire session 
-    // you can use it on any of the routes 
+    // you can use it on any of the routes as SESSION IS MAINTAINED
 });
 
 // authentication 
@@ -67,7 +64,7 @@ passport.use(new LocalStrategy({
                 // there is a matching user
                 const { password_:hashedPass } = queryRes.rows[0]; 
                 const verifyPass = await userPass.comparePass(password, hashedPass);
-                if (!verifyPass) return done(null, false, {message: "Incorrect password"});  // FALSE
+                if (verifyPass === false) return done(null, false, {message: "Incorrect password"});  // FALSE
 
                 // else --> TRUE
                 return done(null, queryRes.rows[0]);  // no error, returning user found 

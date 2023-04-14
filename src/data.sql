@@ -18,7 +18,7 @@ CREATE TABLE Events (
 CREATE TABLE Users (
     user_id serial PRIMARY KEY NOT NULL,
     username varchar(255) UNIQUE NOT NULL,
-    password_ varchar(700) NOT NULL,
+    password_ text NOT NULL,
     first_name varchar(255) NOT NULL,
     last_name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
