@@ -44,6 +44,11 @@ const Dashboard = () => {
     //   updateEventCards(data);
     // });
     let data = testEvents;
+    data = data.sort((a, b) => {
+      let dateA = new Date(dateConverter(a.date_time))
+      let dateB = new Date(dateConverter(b.date_time))
+      return dateA - dateB
+    })
     updateEvents(data);
     data = mapEvents(data);
     updateEventCards(data);
@@ -143,11 +148,11 @@ const Dashboard = () => {
       }
       return acc;
     }, []);
-    // filteredEvents = filteredEvents.sort((a, b) => {
-    //   let testA = new Date(dateConverter(a.date_time))
-    //   let testB = new Date(dateConverter(b.date_time))
-      
-    // })
+    filteredEvents = filteredEvents.sort((a, b) => {
+      let dateA = new Date(dateConverter(a.date_time))
+      let dateB = new Date(dateConverter(b.date_time))
+      return dateA - dateB
+    })
     const filteredEventCards = mapEvents(filteredEvents);
     updateEventCards(filteredEventCards);
   };

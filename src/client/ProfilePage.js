@@ -108,13 +108,13 @@ const ProfilePage = (props) => {
     <div className="profile-page">
       <div className="user-info-column">
         <Avatar
-          {...stringAvatar('Andrew Larkin')}
+          {...stringAvatar(props.currentUser.first_name + " " + props.currentUser.last_name)}
         />
         <Typography variant="h6" gutterBottom>
-          Larkinaj | Andrew Larkin
+          {props.currentUser.username} | {props.currentUser.first_name} {props.currentUser.last_name}
         </Typography>
         <Typography variant="h6" gutterBottom>
-          larkin.aj@gmail.com
+          {props.currentUser.email}
         </Typography>
         <Button>Edit User Info</Button>
         <Button onClick={createEventButton}>Create Event</Button>
