@@ -4,7 +4,6 @@ import { Request, Response, NextFunction} from 'express';
 import userController from '../controllers/userController';
 import passport from 'passport';
 
-
 const userRoutes = express.Router();
 
 userRoutes.post('/register', userController.createUser, (req: Request, res: Response, next:NextFunction):void => {
@@ -73,7 +72,7 @@ userRoutes.delete('/logout', (req: Request, res: Response, next: NextFunction):v
 // get user's info 
 userRoutes.get('/getUser', userController.getUser, (req: Request, res:Response, next:NextFunction):void => {
     try {
-       if (res.locals.userInfo) res.send(200).json(res.locals.userInfo);
+       if (res.locals.userInfo && res.locals.loggedIn) res.send(200).json(res.locals.userInfo);
        else res.status(400).send('You must log in or register');
     } catch (err) {
        next({log: 'error in getting user data', message: err});
@@ -83,7 +82,8 @@ userRoutes.get('/getUser', userController.getUser, (req: Request, res:Response, 
 // edit user profile info
 userRoutes.put('/editUser/:id', userController.editUser, (req: Request, res: Response, next: NextFunction):void => {
     try {
-        if (!res.locals.editedUser) res.status(400).send('No such user exists!');
+        if (!res.locals.loggedIn) res.status(400).send('You must log in or register');
+        else if (!res.locals.editedUser) res.status(400).send('No such user exists!');
         else res.status(200).json(res.locals.editedUser);
     } catch (err) {
         return next({log: 'Error in edit user route', message: err});
@@ -93,8 +93,9 @@ userRoutes.put('/editUser/:id', userController.editUser, (req: Request, res: Res
 // delete user from db completely
 userRoutes.delete('/deleteUser', userController.deleteUser, (req: Request, res: Response, next: NextFunction):void => {
     try {
-        if (!res.locals.deletedUser) res.status(400).send('No such user exists!');
-        else res.status(200).json(res.locals.deletedUser);
+        if (!res.locals.loggedIn) res.status(400).send('You are not authorized to take this action');
+        else if (!res.locals.deletedUser) res.status(400).send('No such user exists!');
+        else res.status(200).json(res.locals.deletedUser);  // deleting a user should redirect to log user out
     } catch (err) {
         return next({log: 'Error in delete user route', message: err});
     }

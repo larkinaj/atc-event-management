@@ -2,10 +2,10 @@ import express from 'express';
 import path from 'path';
 import passport from 'passport';
 import session from 'express-session';
-import './helpers/passport-config';
 import userRoutes from './routes/userRoutes';
 import api from './routes/api';
 import cors from 'cors';
+import './helpers/passport-config'; // ONLY import ONCE at the app's server level (= instantiating passport)
 const app = express();
 
 import {fileURLToPath} from 'url';

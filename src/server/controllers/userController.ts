@@ -24,8 +24,8 @@ const userController = {
             const { username, password, first_name, last_name, email, bio, industry } = req.body; 
             const hashedPass = await userPass.hashPass(password);
 
-            console.log('hashed password: ', hashedPass);
-            console.log('hashed password type: ', typeof hashedPass);
+            // console.log('hashed password: ', hashedPass);
+            // console.log('hashed password type: ', typeof hashedPass);
 
             const newUser = [username, hashedPass, first_name, last_name, email, bio, industry];
 
@@ -59,14 +59,21 @@ const userController = {
 
             console.log('req.user is: ', req.user);
 
-            // res.locals.userInfo = req.user;
+            // is there an active session ?
+            if (!req.user) {
+                // req.user is undef ---> dead session
+                res.locals.loggedIn = false; 
+                return next();
+            }
 
-            // WHEN SESSION WORKS ---> ALL WE NEED IS REQ.USER
-            // TEMP --> REQ.PARAMS 
-            const sqlStr = `SELECT * FROM users WHERE user_id = $1`;
-            const queryRes: any = await query(sqlStr, [ req.params.id ]);
-            res.locals.userInfo = queryRes.rows[0];
+            // const sqlStr = `SELECT * FROM users WHERE user_id = $1`;
+            // const queryRes: any = await query(sqlStr, [ req.params.id ]);
+            // res.locals.userInfo = queryRes.rows[0];
+
+            res.locals.loggedIn = true;
+            res.locals.userInfo = req.user; 
             return next();
+
         } catch (err) {
             return next({log: 'Error in getUser controller', message: err});
         }
@@ -75,11 +82,19 @@ const userController = {
     deleteUser: async (req: Request, res:Response, next:NextFunction):Promise<unknown> => {
         // completely erase user instance from db
         try {
-            // WHEN SESSION WORKS ---> ALL WE NEED IS REQ.USER
-            // TEMP --> REQ.PARAMS 
+
+            // is there an active session ?
+            if (!req.user) {
+                // req.user is undef ---> dead session
+                res.locals.loggedIn = false; 
+                return next();
+            }
+
+            res.locals.loggedIn = true;
             const sqlStr = `DELETE from users 
-            WHERE user_id = $1;`;
-            const queryRes: any = await query(sqlStr, [ req.params.id ]);
+            WHERE user_id = $1
+            RETURNING *;`;
+            const queryRes: any = await query(sqlStr, [ req.user.user_id ]);
             if (queryRes.rows[0]) res.locals.deletedUser = queryRes.rows[0];
             return next(); 
 
@@ -95,8 +110,7 @@ const userController = {
         console.log('req user: ', req.user);
 
         try {
-            // WHEN SESSION WORKS ---> ALL WE NEED IS REQ.USER
-            // TEMP --> REQ.PARAMS 
+
             const sqlVars = [];  // array to populate for sql query (PUSH)
             const sqlStr = `UPDATE users 
             SET first_name =  $1,
@@ -113,9 +127,17 @@ const userController = {
                 sqlVars.push(req.body[edits[i]]);
             }
 
-            sqlVars.push(req.params.id);
+            // is there an active session ?
+            if (!req.user) {
+                // req.user is undef ---> dead session
+                res.locals.loggedIn = false; 
+                return next();
+            }
+
+            sqlVars.push(req.user.user_id);
+            res.locals.loggedIn = true;
             const queryRes: any = await query(sqlStr, sqlVars); 
-            if (queryRes.rows[0]) res.locals.editedUser = queryRes.rows[0];  console.log(queryRes.rows[0]);
+            if (queryRes.rows[0]) res.locals.editedUser = queryRes.rows[0]; 
             return next();
 
         } catch (err) {
