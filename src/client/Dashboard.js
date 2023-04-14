@@ -54,7 +54,7 @@ const Dashboard = () => {
     return eventsArray.map((event) => {
       return (
         <Grid item xs={12} sm={6} md={4} lg={3} key={event.event_name}>
-          <div className="cardWrapper">
+          <div>
             <Card
               sx={{
                 borderColor: "rgba(119, 136, 153, 0.5)",
@@ -65,28 +65,41 @@ const Dashboard = () => {
               {" "}
               {/* #778899 with 50% opaqueness represented in rgba */}
               <React.Fragment>
-                <Box sx={{ height: 20, bgcolor: "#003366" }} />
-                <CardContent className="eventCardContent">
+                <Box
+                  sx={{
+                    height: 20,
+                    bgcolor: "#003366",
+                    wordWrap: "break-word",
+                  }}
+                />
+                <CardContent
+                  className="eventCardContent"
+                  sz={{ wordWrap: "break-word" }}
+                >
                   <Typography
                     sx={{ fontSize: 14 }}
                     color="text.secondary"
                     gutterBottom
+                    sz={{ wordWrap: "break-word" }}
                   >
                     {event.date_time}
                   </Typography>
                   <Typography
-                    variant="h5"
+                    variant="h6"
                     component="div"
-                    sx={{ color: "#000000" }}
+                    sx={{
+                      color: "#000000",
+                      wordWrap: "break-word",
+                    }}
                   >
                     {event.event_name}{" "}
                     {/* This should be a link that shows user more information about event */}
                   </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                  <Typography sx={{ mb: 1.5, fontSize: 14, wordWrap: "break-word" }} color="text.secondary">
                     {event.event_location} | {event.industry} |{" "}
                     {event.event_type}
                   </Typography>
-                  <Typography variant="body2">
+                  <Typography variant="body2" sx={{ wordWrap: "break-word" }}>
                     {event.total_attendees} attendees
                   </Typography>
                 </CardContent>
@@ -188,8 +201,8 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <Header />
-      <div className="queryBar">
-        <div className="search-items">
+      <Grid container className="queryBar" spacing={2}>
+        <Grid item className="search-items">
           <TextField
             id="search-bar"
             className="search-items"
@@ -213,8 +226,8 @@ const Dashboard = () => {
               ),
             }}
           />
-        </div>
-        <div className="search-items">
+        </Grid>
+        <Grid item className="search-items">
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DateRangePicker
               className="search-date"
@@ -225,59 +238,59 @@ const Dashboard = () => {
               label="Pick a date"
             />
           </LocalizationProvider>
-        </div>
-        <FormControl>
-          <InputLabel className="search-items" id="industry-search-label">
-            Industry
-          </InputLabel>
-          <Select
-            labelId="industry-search-label"
-            className="searchEventDropdown search-items"
-            value={searchQuery.industry}
-            // autoWidth label="Industry"
-            onChange={industryChange}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={"Information Technology"}>
-              Information Technology
-            </MenuItem>
-            <MenuItem value={"Finance"}>Finance</MenuItem>
-            <MenuItem value={"Healthcare"}>Healthcare</MenuItem>
-            <MenuItem value={"Entertainment"}>Entertainment</MenuItem>
-            <MenuItem value={"Marketing"}>Marketing</MenuItem>
-            <MenuItem value={"Food and Beverage"}>Food and Beverage</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel className="search-items" id="eventtype-search-label">
-            Event Type
-          </InputLabel>
-          <Select
-            labelId="eventtype-search-label"
-            className="searchEventDropdown search-items"
-            value={searchQuery.eventType}
-            onChange={eventTypeChange}
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={"Alumni Gathering"}>Alumni Gathering</MenuItem>
-            <MenuItem value={"Career Fair"}>Career Fair</MenuItem>
-            <MenuItem value={"Networking Meetup"}>Networking Meetup</MenuItem>
-            <MenuItem value={"Informational Interview"}>
-              Informational Interview
-            </MenuItem>
-            <MenuItem value={"Conference"}>Conference</MenuItem>
-            <MenuItem value={"Webinar/Workshop"}>Webinar/Workshop</MenuItem>
-          </Select>
-        </FormControl>
-      </div>
-      <div className="eventCardsWrapper">
-        <Grid container>
-          {eventCards}
         </Grid>
+        <Grid item className="search-items">
+          <FormControl>
+            <InputLabel id="industry-search-label">Industry</InputLabel>
+            <Select
+              labelId="industry-search-label"
+              className="searchEventDropdown"
+              value={searchQuery.industry}
+              // autoWidth label="Industry"
+              onChange={industryChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"Information Technology"}>
+                Information Technology
+              </MenuItem>
+              <MenuItem value={"Finance"}>Finance</MenuItem>
+              <MenuItem value={"Healthcare"}>Healthcare</MenuItem>
+              <MenuItem value={"Entertainment"}>Entertainment</MenuItem>
+              <MenuItem value={"Marketing"}>Marketing</MenuItem>
+              <MenuItem value={"Food and Beverage"}>Food and Beverage</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item className="search-items">
+          <FormControl>
+            <InputLabel id="eventtype-search-label">Event Type</InputLabel>
+            <Select
+              labelId="eventtype-search-label"
+              className="searchEventDropdown"
+              value={searchQuery.eventType}
+              onChange={eventTypeChange}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"Alumni Gathering"}>Alumni Gathering</MenuItem>
+              <MenuItem value={"Career Fair"}>Career Fair</MenuItem>
+              <MenuItem value={"Networking Meetup"}>Networking Meetup</MenuItem>
+              <MenuItem value={"Informational Interview"}>
+                Informational Interview
+              </MenuItem>
+              <MenuItem value={"Conference"}>Conference</MenuItem>
+              <MenuItem value={"Webinar/Workshop"}>Webinar/Workshop</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
+      <div className="allCardsWrapper">
+      <Grid container spacing={2}>
+        {eventCards}
+      </Grid>
       </div>
     </div>
   );

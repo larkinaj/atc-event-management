@@ -1,4 +1,5 @@
 import React from "react";
+import { Link as RouterLink } from 'react-router-dom';
 import { Button, TextField, Box, Link, Typography } from "@mui/material";
 import "./styles/landingpage.css";
 import ListItem from "@mui/material/ListItem";
@@ -84,6 +85,7 @@ const LandingPage = () => {
                 name="userLogin"
                 label="Username"
                 variant="outlined"
+                size="small"
                 sx={{
                   "& .MuiInputLabel-outlined": {
                     // Vertically centers the label
@@ -110,6 +112,7 @@ const LandingPage = () => {
                 label="Password"
                 type="password"
                 variant="outlined"
+                size="small"
                 sx={{
                   "& .MuiInputLabel-outlined": {
                     // Vertically centers the label
@@ -143,14 +146,14 @@ const LandingPage = () => {
                   Not a member?{" "}
                 </Typography>
                 <Link
-                  href="/signup"
+                  component={RouterLink} to="/registration"
                   sx={{ fontSize: "12px", color: "#003366" }}
                 >
                   Signup
                 </Link>{" "}
                 |{" "}
                 <Link
-                  href="/forgotpassword"
+                  component={RouterLink} to="/reset"
                   sx={{ fontSize: "12px", color: "#003366" }}
                 >
                   Forgot password?
