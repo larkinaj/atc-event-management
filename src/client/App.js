@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LandingPage from "./LandingPage";
 import Dashboard from "./Dashboard";
 import EventPage from "./EventPage";
 import ProfilePage from "./ProfilePage";
-import EventCreation from "./EventCreation";
+import CreateEvent from "./CreateEvent";
 import Registration from "./Registration";
 import ForgotPassword from "./ForgotPassword";
 
@@ -28,6 +28,16 @@ const theme = createTheme({
 
 
 const App = () => {
+  const [eventDetails, setEventDetails] = useState({
+    nameOfEvent: '',
+    industryOfEvent: '',
+    typeOfEvent: '',
+    descriptionOfEvent: '',
+    locationOfEvent: '',
+    priceOfEvent: '',
+    imageOfEvent: '',
+  })
+
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -35,10 +45,11 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/eventpage" element={<EventPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/eventcreation" element={<EventCreation />} />
+          <Route path="/profile" element={<ProfilePage eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
+          <Route path="/create-event" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/reset" element={<ForgotPassword />} />
+          <Route path="/edit-event/:id" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
         </Routes>
       </div>
     </ThemeProvider>
