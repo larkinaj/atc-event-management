@@ -1,28 +1,28 @@
-@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
-* {
-    box-sizing: border-box;
-}
 
 html, body {
     margin: 0;
     padding: 0;
-    /* font-family: 'Anuphan', sans-serif; */
     font-family: 'Poppins', sans-serif;
-  }
-
+}
 
 .searchEventDropdown {
   min-width: 150px;
 }
 
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .queryBar {
-  /* margin-top: 100px;
-  margin-left: 50px; */
   display: flex;
   align-items: center;
   margin: 3rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 #search-bar {
@@ -47,9 +47,10 @@ html, body {
   width: 300px;
   height: 150px;
   margin-bottom: 16px;
+  padding: 8px !important;
 }
 
 .eventCardsWrapper {
-  margin: 5rem;
-  padding: 5rem;
+  margin-left: 5rem;
+  margin-right: 5rem;
 }
