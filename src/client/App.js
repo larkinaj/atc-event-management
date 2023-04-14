@@ -45,7 +45,7 @@ const App = () => {
           <Route path="/" element={<LandingPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/eventpage" element={<EventPage />} />
-          <Route path="/profile" element={<ProfilePage eventDetails={eventDetails} setEventDetails={setEventDetails} />} />} />
+          <Route path="/profile" element={<ProfilePage eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
           <Route path="/create-event" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/reset" element={<ForgotPassword />} />

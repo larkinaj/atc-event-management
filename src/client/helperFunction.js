@@ -7,3 +7,5 @@ const dateConverter = (date) => {
   const newDate = months[Number(month) - 1] + ' ' + day
   return newDate
 }
+
+export default dateConverter;

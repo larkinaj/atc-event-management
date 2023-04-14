@@ -23,8 +23,8 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-
 import Grid from "@mui/material/Grid";
+import dateConverter from "./helperFunction";
 
 import readEventsRequest from "./api/readEventsRequest";
 
@@ -143,11 +143,11 @@ const Dashboard = () => {
       }
       return acc;
     }, []);
-    filteredEvents = filteredEvents.sort((a, b) => {
-      let testA = new Date(dateConverter(a.date_time))
-      let testB = new Date(dateConverter(b.date_time))
+    // filteredEvents = filteredEvents.sort((a, b) => {
+    //   let testA = new Date(dateConverter(a.date_time))
+    //   let testB = new Date(dateConverter(b.date_time))
       
-    })
+    // })
     const filteredEventCards = mapEvents(filteredEvents);
     updateEventCards(filteredEventCards);
   };
@@ -172,14 +172,6 @@ const Dashboard = () => {
     const searchCopy = structuredClone(searchQuery);
     searchCopy.industry = event.target.value;
     setSearchQuery(searchCopy);
-    // const filteredEvents = events.reduce((acc, curr) => {
-    //   if ((curr.industry === searchCopy.industry && curr.event_type === searchCopy.eventType)|| event.target.value === "") {
-    //     acc.push(curr);
-    //   }
-    //   return acc;
-    // }, []);
-    // const filteredEventCards = mapEvents(filteredEvents);
-    // updateEventCards(filteredEventCards);
   };
 
   // Filter by event type ==================
@@ -188,14 +180,6 @@ const Dashboard = () => {
     const searchCopy = structuredClone(searchQuery);
     searchCopy.eventType = event.target.value;
     setSearchQuery(searchCopy);
-    // const filteredEvents = events.reduce((acc, curr) => {
-    //   if ((curr.industry === searchCopy.industry && curr.event_type === searchCopy.eventType) || event.target.value === "") {
-    //     acc.push(curr);
-    //   }
-    //   return acc;
-    // }, []);
-    // const filteredEventCards = mapEvents(filteredEvents);
-    // updateEventCards(filteredEventCards);
   };
 
   return (
@@ -246,7 +230,6 @@ const Dashboard = () => {
               labelId="industry-search-label"
               className="searchEventDropdown"
               value={searchQuery.industry}
-              // autoWidth label="Industry"
               onChange={industryChange}
             >
               <MenuItem value="">
