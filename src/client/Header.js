@@ -21,7 +21,7 @@ const Header = () => {
           <Button component={RouterLink} to="/help" sx={{ color: '#ffffff', textDecoration: 'none' }}>
             Help
           </Button>
-          <Button component={RouterLink} to="/signin" sx={{ backgroundColor: '#ffffff', color: '#FF7F50', textDecoration: 'none', marginLeft: '16px' }}>
+          <Button component={RouterLink} to="/" sx={{ backgroundColor: '#ffffff', color: '#FF7F50', textDecoration: 'none', marginLeft: '16px' }}>
             Login
           </Button>
         </Box>

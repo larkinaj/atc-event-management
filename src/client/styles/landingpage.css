@@ -58,7 +58,7 @@ body {
   border-radius: 4px;
   padding: 50px 20px;
   text-align: center;
-  height: 400px;
+  max-height: 400px;
   width: 100%;
   max-width: 400px;
   display: flex;
@@ -94,8 +94,9 @@ body {
 }
 
 .login-card button:hover {
-  background-color: #ff7f50;
-  border: #ff7f50;
+  background-color: #00274d;
+  color: white;
+  border: none;
 }
 
 .loginButtons {
