@@ -61,7 +61,7 @@ userRoutes.delete('/logout', (req: Request, res: Response, next: NextFunction):v
 });
 
 // get events attending / get events hosted by user 
-userRoutes.get('/getUser/events', userController.getUserEvents, (req: Request, res:Response, next:NextFunction):void => {
+userRoutes.get('/getUserEvents', userController.getUserEvents, (req: Request, res:Response, next:NextFunction):void => {
     try {
         if (!res.locals.loggedIn) res.status(401).json({message: 'You are not authorized to take this action'});
         else if (!res.locals.userEvents) res.status(400).json({message: 'User has no events!'});
@@ -82,7 +82,7 @@ userRoutes.get('/getUser', userController.getUser, (req: Request, res:Response, 
 });
 
 // edit user profile info
-userRoutes.put('/editUser/:id', userController.editUser, (req: Request, res: Response, next: NextFunction):void => {
+userRoutes.put('/editUser', userController.editUser, (req: Request, res: Response, next: NextFunction):void => {
     try {
         if (!res.locals.loggedIn) res.status(401).json({message: 'You are not authorized to take this action'});
         else if (!res.locals.editedUser) res.status(400).json({message: 'No such user exists!'});
