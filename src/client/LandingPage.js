@@ -86,6 +86,7 @@ const LandingPage = () => {
                 label="Username"
                 variant="outlined"
                 size="small"
+                InputLabelProps={{ shrink: true }}
                 sx={{
                   "& .MuiInputLabel-outlined": {
                     // Vertically centers the label
@@ -113,6 +114,7 @@ const LandingPage = () => {
                 type="password"
                 variant="outlined"
                 size="small"
+                InputLabelProps={{ shrink: true }}
                 sx={{
                   "& .MuiInputLabel-outlined": {
                     // Vertically centers the label

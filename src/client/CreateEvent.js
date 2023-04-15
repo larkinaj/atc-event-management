@@ -151,11 +151,12 @@ const CreateEvent = (props) => {
             onChange={eventNameChange}
             value={props.eventDetails.nameOfEvent}
             className="full-width"
+            size="small"
           />
         </div>
         <div className="createEventInput">
           <h4 className="createEventLeft">Industry:</h4>
-          <FormControl sx={{ minWidth: 200 }} fullWidth>
+          <FormControl sx={{ minWidth: 200 }} fullWidth size="small">
             <InputLabel className="">Event Industry</InputLabel>
             <Select
               className=""
@@ -179,7 +180,7 @@ const CreateEvent = (props) => {
         </div>
         <div className="createEventInput">
           <h4 className="createEventLeft">Event Type:</h4>
-          <FormControl sx={{ minWidth: 200 }} className="full-width">
+          <FormControl sx={{ minWidth: 200 }} className="full-width" size="small">
             <InputLabel className="full-width">Event Type</InputLabel>
             <Select
               className=""
@@ -201,7 +202,7 @@ const CreateEvent = (props) => {
           </FormControl>
         </div>
         <div className="createEventInput">
-          <h4 className="createEventLeft">Descrption:</h4>
+          <h4 className="createEventLeft">Description:</h4>
           <TextField
             fullWidth
             required
@@ -218,7 +219,7 @@ const CreateEvent = (props) => {
         </div>
         <div className="createEventInput">
           <h4 className="createEventLeft">Date and Time:</h4>
-          <FormControl sx={{ minWidth: 200 }} className="full-width">
+          <FormControl sx={{ minWidth: 200 }} className="full-width" size="small">
             <LocalizationProvider
               dateAdapter={AdapterDayjs}
               className="full-width"
@@ -246,6 +247,7 @@ const CreateEvent = (props) => {
             onChange={eventLocationChange}
             value={props.eventDetails.locationOfEvent}
             className="full-width"
+            size="small"
           />
         </div>
         <div className="createEventInput">

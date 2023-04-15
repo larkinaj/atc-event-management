@@ -1,33 +1,53 @@
 .profile-page {
   display: flex;
-  margin-top: 100px;
+  margin-top: 2rem;
+  height: 100vh;
 }
 
 .user-info-column {
-  flex: 1 1 40%;
+  flex: 1 1 30%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 2rem;
 }
 
 .user-events-column {
-  flex: 2 1 60%;
+  flex: 2 1 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 2rem;
 }
 
-.cardWrapperProfile {
-  min-width: 600px;
-  margin: 10px;
+.cardWrapperProfile  {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  width: 100%;
 }
+
+.allCardsWrapper .MuiGrid-container {
+  display: flex;
+  align-items: center;
+  height: 150px;
+  padding: 8px !important;
+}
+
 
 .eventCardContentProfile {
-  width: 100%;
-  height: 155px;
-  margin-bottom: 16px;
+  height: 150px;
+  padding: 8px !important;
 }
 
 .eventsHostingHeader {
   align-self: self-start;
+}
+
+.hosting, .attending, .attended {
+  width: 90%;
+}
+
+.custom-margin {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
 }

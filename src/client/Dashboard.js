@@ -39,10 +39,10 @@ const Dashboard = () => {
   useEffect(() => {
     readEventsRequest().then((data) => {
       data = data.sort((a, b) => {
-        let dateA = new Date(dateConverter(a.date_time))
-        let dateB = new Date(dateConverter(b.date_time))
-        return dateA - dateB
-      })
+        let dateA = new Date(dateConverter(a.date_time));
+        let dateB = new Date(dateConverter(b.date_time));
+        return dateA - dateB;
+      });
       console.log(data);
       updateEvents(data);
       data = mapEvents(data);
@@ -105,7 +105,10 @@ const Dashboard = () => {
                     {event.event_name}{" "}
                     {/* This should be a link that shows user more information about event */}
                   </Typography>
-                  <Typography sx={{ mb: 1.5, fontSize: 14, wordWrap: "break-word" }} color="text.secondary">
+                  <Typography
+                    sx={{ mb: 1.5, fontSize: 14, wordWrap: "break-word" }}
+                    color="text.secondary"
+                  >
                     {event.event_location} | {event.industry} |{" "}
                     {event.event_type}
                   </Typography>
@@ -130,34 +133,45 @@ const Dashboard = () => {
     industry: "",
     eventType: "",
   });
-  const [searchDate, setSearchDate] = useState([dayjs(), dayjs()])
+  const [searchDate, setSearchDate] = useState([dayjs(), dayjs()]);
 
   const searchEvents = (event) => {
     console.log(searchQuery);
     console.log(searchDate);
     let filteredEvents = events.reduce((acc, curr) => {
-      if (curr.industry === searchQuery.industry || searchQuery.industry === '') {
+      if (
+        curr.industry === searchQuery.industry ||
+        searchQuery.industry === ""
+      ) {
         acc.push(curr);
       }
       return acc;
     }, []);
     filteredEvents = filteredEvents.reduce((acc, curr) => {
-      if (curr.event_type === searchQuery.eventType || searchQuery.eventType === '') {
+      if (
+        curr.event_type === searchQuery.eventType ||
+        searchQuery.eventType === ""
+      ) {
         acc.push(curr);
       }
       return acc;
     }, []);
     filteredEvents = filteredEvents.reduce((acc, curr) => {
-      if (curr.event_name.toLowerCase().includes(searchQuery.name.toLowerCase())|| searchQuery.name === '') {
+      if (
+        curr.event_name
+          .toLowerCase()
+          .includes(searchQuery.name.toLowerCase()) ||
+        searchQuery.name === ""
+      ) {
         acc.push(curr);
       }
       return acc;
     }, []);
     filteredEvents = filteredEvents.sort((a, b) => {
-      let dateA = new Date(dateConverter(a.date_time))
-      let dateB = new Date(dateConverter(b.date_time))
-      return dateA - dateB
-    })
+      let dateA = new Date(dateConverter(a.date_time));
+      let dateB = new Date(dateConverter(b.date_time));
+      return dateA - dateB;
+    });
     const filteredEventCards = mapEvents(filteredEvents);
     updateEventCards(filteredEventCards);
   };
@@ -171,9 +185,9 @@ const Dashboard = () => {
 
   // Filter by date range ==================
   const dateChange = (event) => {
-    console.log("DATE CHANGE", event[0].$d)
+    console.log("DATE CHANGE", event[0].$d);
     console.log("DATE CHANGE", event);
-    setSearchDate(event)
+    setSearchDate(event);
   };
 
   // Filter by industry ==================
@@ -193,97 +207,103 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
+    <div>
       <Header />
-      <Grid container className="queryBar" spacing={2}>
-        <Grid item className="search-items">
-          <TextField
-            id="search-bar"
-            className="search-items"
-            onChange={searchChange}
-            variant="outlined"
-            placeholder="Search..."
-            size="small"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={searchEvents}
-                    className="searchIcon"
-                    type="button"
-                    sx={{ p: "10px" }}
-                    aria-label="search"
-                  >
-                    <Search className="searchIcon" />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-        <Grid item className="search-items">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateRangePicker
-              className="search-date"
-              localeText={{ start: "Start Date", end: "End Date" }}
-              value={searchDate}
-              onChange={dateChange}
-              slots={{ field: SingleInputDateRangeField }}
-              label="Pick a date"
+      <div className="dashboard">
+        <Grid container className="queryBar" spacing={2}>
+          <Grid item className="search-items">
+            <TextField
+              id="search-bar"
+              className="search-items"
+              onChange={searchChange}
+              variant="outlined"
+              placeholder="Search..."
+              size="small"
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={searchEvents}
+                      className="searchIcon"
+                      type="button"
+                      sx={{ p: "10px" }}
+                      aria-label="search"
+                    >
+                      <Search className="searchIcon" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
-          </LocalizationProvider>
+          </Grid>
+          <Grid item className="search-items">
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateRangePicker
+                className="search-date"
+                localeText={{ start: "Start Date", end: "End Date" }}
+                value={searchDate}
+                onChange={dateChange}
+                slots={{ field: SingleInputDateRangeField }}
+                label="Pick a date"
+              />
+            </LocalizationProvider>
+          </Grid>
+          <Grid item className="search-items">
+            <FormControl>
+              <InputLabel id="industry-search-label">Industry</InputLabel>
+              <Select
+                labelId="industry-search-label"
+                className="searchEventDropdown"
+                value={searchQuery.industry}
+                onChange={industryChange}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={"Information Technology"}>
+                  Information Technology
+                </MenuItem>
+                <MenuItem value={"Finance"}>Finance</MenuItem>
+                <MenuItem value={"Healthcare"}>Healthcare</MenuItem>
+                <MenuItem value={"Entertainment"}>Entertainment</MenuItem>
+                <MenuItem value={"Marketing"}>Marketing</MenuItem>
+                <MenuItem value={"Food and Beverage"}>
+                  Food and Beverage
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item className="search-items">
+            <FormControl>
+              <InputLabel id="eventtype-search-label">Event Type</InputLabel>
+              <Select
+                labelId="eventtype-search-label"
+                className="searchEventDropdown"
+                value={searchQuery.eventType}
+                onChange={eventTypeChange}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={"Alumni Gathering"}>Alumni Gathering</MenuItem>
+                <MenuItem value={"Career Fair"}>Career Fair</MenuItem>
+                <MenuItem value={"Networking Meetup"}>
+                  Networking Meetup
+                </MenuItem>
+                <MenuItem value={"Informational Interview"}>
+                  Informational Interview
+                </MenuItem>
+                <MenuItem value={"Conference"}>Conference</MenuItem>
+                <MenuItem value={"Webinar/Workshop"}>Webinar/Workshop</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
         </Grid>
-        <Grid item className="search-items">
-          <FormControl>
-            <InputLabel id="industry-search-label">Industry</InputLabel>
-            <Select
-              labelId="industry-search-label"
-              className="searchEventDropdown"
-              value={searchQuery.industry}
-              onChange={industryChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={"Information Technology"}>
-                Information Technology
-              </MenuItem>
-              <MenuItem value={"Finance"}>Finance</MenuItem>
-              <MenuItem value={"Healthcare"}>Healthcare</MenuItem>
-              <MenuItem value={"Entertainment"}>Entertainment</MenuItem>
-              <MenuItem value={"Marketing"}>Marketing</MenuItem>
-              <MenuItem value={"Food and Beverage"}>Food and Beverage</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item className="search-items">
-          <FormControl>
-            <InputLabel id="eventtype-search-label">Event Type</InputLabel>
-            <Select
-              labelId="eventtype-search-label"
-              className="searchEventDropdown"
-              value={searchQuery.eventType}
-              onChange={eventTypeChange}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={"Alumni Gathering"}>Alumni Gathering</MenuItem>
-              <MenuItem value={"Career Fair"}>Career Fair</MenuItem>
-              <MenuItem value={"Networking Meetup"}>Networking Meetup</MenuItem>
-              <MenuItem value={"Informational Interview"}>
-                Informational Interview
-              </MenuItem>
-              <MenuItem value={"Conference"}>Conference</MenuItem>
-              <MenuItem value={"Webinar/Workshop"}>Webinar/Workshop</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
-      <div className="allCardsWrapper">
-      <Grid container spacing={2}>
-        {eventCards}
-      </Grid>
+        <div className="allCardsWrapper">
+          <Grid container spacing={2}>
+            {eventCards}
+          </Grid>
+        </div>
       </div>
     </div>
   );

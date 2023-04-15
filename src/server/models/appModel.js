@@ -2,7 +2,7 @@
 import pg from 'pg';
 
 // const PG_URI = "postgres://wbpifxvw:q8lghllZohqY4rkyYdpyF64er5iguO96@heffalump.db.elephantsql.com/wbpifxvw"
-const PG_URI = "postgres://lxigtjgl:wP50ncLWiiuuLCbVnZdsgx2XaV5ar3tr@lallah.db.elephantsql.com/lxigtjgl";
+const PG_URI = "postgres://lxigtjgl:wP50ncLWiiuuLCbVnZdsgx2XaV5ar3tr@lallah.db.elephantsql.com/lxigtjgl"
 
 
 const pool = new pg.Pool({
