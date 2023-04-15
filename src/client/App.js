@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import LandingPage from "./LandingPage";
@@ -37,7 +37,13 @@ const App = () => {
     priceOfEvent: '',
     imageOfEvent: '',
   })
-  const [currentUser, setCurrentUser] = useState({
+
+  useEffect(() => {
+
+  }, []);
+  const [currentUser, setCurrentUser] = useState(
+    {
+    
     user_id: 1,
     username: "stekim4",
     password_: "",
@@ -48,14 +54,16 @@ const App = () => {
     industry: "Information Technology",
     user_resume: null,
     picture: null,
-  })
+  }
+  )
+
 
   return (
     <ThemeProvider theme={theme}>
       <div>
         <Routes>
           <Route path="/" element={<LandingPage currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard currentUser={currentUser} />} />
           <Route path="/eventpage" element={<EventPage />} />
           <Route path={`/profile/${currentUser.username}`} element={<ProfilePage currentUser={currentUser} eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
           <Route path="/create-event" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} currentUser={currentUser} />} />
