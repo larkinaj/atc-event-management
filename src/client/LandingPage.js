@@ -10,19 +10,47 @@ const LandingPage = () => {
   const loginUser = (event) => {
     event.preventDefault();
     let credentials = {
-      userLogin: event.target.userLogin.value,
-      passLogin: event.target.passLogin.value,
+      username: event.target.userLogin.value,
+      password: event.target.passLogin.value,
     };
     console.log(credentials);
     // Uncomment the code below once the backend team finishes the routes
-    // fetch('http://localhost:3000/login', {
+    // fetch('http://localhost:3000/api/users/login', {
     //   method: 'POST',
+    //   credentials: 'include',
     //   headers: {'Content-Type': 'application/json'},
     //   body: JSON.stringify(credentials)
     // })
-    // .then((res)=>res.json())
+    // .then((res)=>{
+    //   // if (res.status === 400) {
+    //   //   setLoginStatus('Invalid Username or Password')
+    //   // }
+    //   // else {
+    //   //   setLoginStatus()
+    //   // }
+    //   return res.json()
+    // })
     // .then((data) => {
     //   console.log(data)
+    //   // props.setCurrentUser(data)
+    //   // console.log(props.currentUser)
+    //   // navigate("/dashboard")
+    //   fetch('http://localhost:3000/api/users/editUser/5', {
+    //     method: 'PUT',
+    //     headers: {'Content-Type': 'application/json'},
+    //     credentials: 'include',
+    //     body: JSON.stringify({
+    //       "first_name": "kay",
+    //       "last_name": "reem",
+    //       "email": "kreem@gmail.com",
+    //       "bio": "hi i am kayreem and i love tea",
+    //       "industry": "sad chemE"
+    //     })
+    //   })
+    //   .then((res)=>res.json())
+    //   .then((data) => {
+    //     console.log(data)
+    //   })
     // })
   };
 

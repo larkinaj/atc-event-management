@@ -147,15 +147,55 @@ const userController = {
         }
     },
 
-    // getUserEvents: async (req: Request, res:Response, next:NextFunction):Promise<unknown> => {
-    //     // get user's attending events and hosting events 
-    //     // WHEN SESSION WORKS ---> ALL WE NEED IS REQ.USER
-    //     // TEMP --> REQ.PARAMS 
-    //     const id = req.params.id; 
-    //     const hostSQL = ``;
+    getUserEvents: async (req: Request, res:Response, next:NextFunction):Promise<unknown> => {
+        // get user's attending events and hosting events 
 
-    //     const attendSQL = ``;
-    // },
+        try {
+            // is there an active session ?
+            if (!req.user) {
+                // req.user is undef ---> dead session
+                res.locals.loggedIn = false; 
+                return next();
+            }
+            
+            res.locals.loggedIn = true; 
+            const hostSQL = `SELECT * FROM events WHERE 
+            host_id = $1
+            ORDER BY date_time ASC;`;   
+
+            const attendSQL = `SELECT * FROM events 
+            LEFT JOIN attendees 
+            ON events.event_id = attendees.event_id
+            WHERE user_id = $1
+            AND event_status = true
+            ORDER BY date_time ASC;`;
+
+            const attendedSQL = `SELECT * FROM events 
+            LEFT JOIN attendees 
+            ON events.event_id = attendees.event_id
+            WHERE user_id = $1
+            AND event_status = false
+            ORDER BY date_time ASC;`;
+
+            const hostRes: any = await query(hostSQL, [ req.user.user_id ]);
+            const attendRes: any = await query(attendSQL, [ req.user.user_id ]);
+            const attendedRes: any = await query(attendedSQL, [ req.user.user_id ]);   
+            
+            res.locals.userEvents = {
+                hosting: hostRes.rows,
+                attending: attendRes.rows,
+                attended: attendedRes.rows
+            };
+            
+            return next();
+
+        } catch (err) {
+
+            return next({log: 'Error in getUserEevents controller', message: err});
+            
+        }
+
+    },
 
 };
 
