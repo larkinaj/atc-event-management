@@ -12,6 +12,7 @@ const userController = {
 
     createUser: async (req: Request, res:Response, next:NextFunction):Promise<unknown> => {
         try {
+
             // check existence of required properties 
             for (const els of required) {
                 if (!req.body[els] || typeof req.body[els] !== 'string') {
@@ -36,19 +37,24 @@ const userController = {
             RETURNING *;`;
 
             const queryRes: any = await query(sqlStr, newUser);
+
             if (queryRes.rows[0]) { 
                 // should only be true if queryRes is not empty
                 res.locals.registerSuccess = true;
                 res.locals.newUser = queryRes.rows[0];
 
-                console.log('sql res: ', res.locals.newUser);
+                console.log('res: ', res.locals.newUser);
 
             }  
             return next(); 
 
-
         } catch (err) {
             return next({log: 'Error in createUser controller', message: err});
+            // WE PROBABLY NEED TO BYPASS EXPRESS ERROR HANDLER & CATCH-ALL TO PASS ERROR BACK TO FRONT
+            // HOW DO WE BYPASS ?
+            // res.locals.error = err;            
+            // console.log('Error in createUser controller!', res.locals.err);
+            // return next();
         }
 
     },
