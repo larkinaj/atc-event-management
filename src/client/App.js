@@ -111,6 +111,16 @@ const App = () => {
               />
             }
           />
+        <Route
+            path="/event/:id"
+            element={
+              <EventPage
+                eventDetails={eventDetails}
+                setEventDetails={setEventDetails}
+                currentUser={currentUser}
+              />
+            }
+          />
         </Routes>
       </div>
     </ThemeProvider>

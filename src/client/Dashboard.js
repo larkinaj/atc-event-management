@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import {
   IconButton,
   TextField,
@@ -32,11 +32,20 @@ import Header from "./Header";
 
 import testEvents from "./testEvent";
 
+import { useNavigate } from "react-router-dom";
+
 const Dashboard = (props) => {
   console.log("current user", props.currentUser);
   const [events, updateEvents] = React.useState([]); // Raw events array
   const [eventCards, updateEventCards] = React.useState([]); // Array of event cards
   const [registeredStatus, updateRegisteredStatus] = React.useState(false);
+
+  const navigate = useNavigate();
+
+  const handleClick = (event) => {
+    console.log("Clicked event: ", event);
+    navigate(`/event/${event.event_id}`, { state: { event } });
+  };
 
   useEffect(() => {
     readEventsRequest().then((data) => {
@@ -61,6 +70,7 @@ const Dashboard = (props) => {
   // Helper function for creating an array of event cards from the raw events array
   const mapEvents = (eventsArray) => {
     return eventsArray.map((event, i) => {
+      console.log("Event in mapEvents:", event);
       return (
         <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
           <div>
@@ -93,17 +103,32 @@ const Dashboard = (props) => {
                   >
                     {event.date_time}
                   </Typography>
-                  <Typography
-                    variant="h6"
-                    component="div"
-                    sx={{
-                      color: "#000000",
-                      wordWrap: "break-word",
-                    }}
-                  >
-                    {event.event_name}{" "}
-                    {/* This should be a link that shows user more information about event */}
-                  </Typography>
+                  {/* <Link
+                  to={{
+                    pathname: `/event/${event.event_id}`,
+                    state: { event },
+                  }}
+                  onClick={() => {
+                    console.log("Clicked event: ", event);
+                    console.log("Link state: ", { event });
+                  }}
+                  > */}
+                    <div onClick={() => handleClick(event)}>
+                    <Typography
+                      variant="h6"
+                      component="div"
+                      sx={{
+                        color: "#000000",
+                        wordWrap: "break-word",
+                        "&:hover": {
+                          color: "#1976D2",
+                        },
+                      }}
+                    >
+                      {event.event_name}{" "}
+                    </Typography>
+                    </div>
+                  {/* </Link> */}
                   <Typography
                     sx={{ mb: 1.5, fontSize: 14, wordWrap: "break-word" }}
                     color="text.secondary"

@@ -10,8 +10,17 @@ import {
 import { Box } from "@mui/system";
 import "./styles/eventpage.css";
 import Header from "./Header";
+import { useLocation } from "react-router-dom";
+import imageFileName from './assets/stock_conference.jpeg';
 
 const EventPage = (props) => {
+
+  const location = useLocation();
+  console.log("location: ", location);
+  console.log("location.state: ", location.state);
+  const event = location.state && location.state.event;
+  console.log("event: ", event);
+
   return (
     <div>
       <Header currentUser={props.currentUser} />
@@ -22,7 +31,7 @@ const EventPage = (props) => {
               className="banner"
               component="img"
               height="400"
-              image="https://www.wikihow.com/images/thumb/6/6e/Organize-a-Class-Reunion-Step-1-Version-2.jpg/aid394962-v4-728px-Organize-a-Class-Reunion-Step-1-Version-2.jpg.webp"
+              image={imageFileName}
               alt="Event banner"
             />
           </Box>
@@ -31,36 +40,31 @@ const EventPage = (props) => {
               <Paper>
                 <Box p={2}>
                   <Typography variant="h4" component="h1">
-                    Codesmith Graduation Party
+                    {event.event_name}
                   </Typography>
-                  <Typography variant="subtitle1" color="textSecondary">
-                    Hosted by John Doe
-                  </Typography>
+                  {/* <Typography variant="subtitle1" color="textSecondary">
+                    Hosted by Host {event.host_id}
+                  </Typography> */}
                   <Box my={2}>
                     <Typography variant="body1">
-                      Industry: Technology
+                      {event.industry} Industry
                     </Typography>
                     <Typography variant="body1">
-                      Event Type: Celebration
+                      {event.event_type}
                     </Typography>
                     <Typography variant="body1">
-                      Event Date: September 9, 2023
+                      Event Date & Time: {event.date_time}
                     </Typography>
                     <Typography variant="body1">
-                      Event Time: 6:00 PM - 9:00 PM
-                    </Typography>
-                    <Typography variant="body1">
-                      Location: 123 Event Street, NYC
+                      Location: {event.event_location}
                     </Typography>
                   </Box>
                   <Typography variant="body1">
-                    Event description goes here. This is where you would add
-                    details about the event, what to expect, and any other
-                    important information for attendees.
+                    {event.event_description}
                   </Typography>
                   <Box mt={2}>
                     <Typography variant="body1">
-                      Total Attendees: 150
+                      Total Attendees: {event.total_attendees}
                     </Typography>
                   </Box>
                 </Box>
@@ -72,7 +76,7 @@ const EventPage = (props) => {
                   <Typography variant="h5" component="h2">
                     Get Tickets
                   </Typography>
-                  <Typography variant="body1">Price: $10 - $20</Typography>
+                  <Typography variant="body1">Price: ${event.event_price}</Typography>
                   <Box my={2}>
                     <Button
                       variant="contained"
