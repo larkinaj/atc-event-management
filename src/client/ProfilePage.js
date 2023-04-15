@@ -253,18 +253,21 @@ const ProfilePage = (props) => {
               props.currentUser.first_name + " " + props.currentUser.last_name
             )}
           />
-          <div>
+          <div className="user-info">
             <Typography variant="h6" gutterBottom>
+              About me
+            </Typography>
+            <Typography variant="string" gutterBottom>
               {props.currentUser.username} | {props.currentUser.first_name}{" "}
               {props.currentUser.last_name}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
+            </Typography><br></br>
+            <Typography variant="string" gutterBottom>
               {props.currentUser.email}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
+            </Typography><br></br>
+            <Typography variant="string" gutterBottom>
               {props.currentUser.industry}
-            </Typography>
-            <Typography variant="h6" gutterBottom>
+            </Typography><br></br>
+            <Typography variant="string" gutterBottom>
               {props.currentUser.bio}
             </Typography>
           </div>

@@ -27,6 +27,7 @@ const Header = (props) => {
             component={RouterLink}
             to="/create-event"
             sx={{ color: "#ffffff", textDecoration: "none" }}
+            // onClick={}
           >
             Create Event
           </Button>

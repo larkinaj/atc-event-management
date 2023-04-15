@@ -26,23 +26,23 @@ const LandingPage = (props) => {
       body: JSON.stringify(credentials),
     })
       .then((res) => {
-        if (res.status >= 400) {
-          setLoginStatus("Invalid Username or Password");
-        } else {
-          setLoginStatus();
-        }
+        // if (res.status >= 400) {
+        //   setLoginStatus("Invalid Username or Password");
+        // } else {
+        //   setLoginStatus();
+        // }
         return res.json();
       })
       .then((data) => {
         console.log(data);
-        props.setCurrentUser(data);
-        console.log(props.currentUser);
-        navigate("/dashboard");
+        if (data.message) {
+          setLoginStatus("Invalid Username or Password");
+        }
+        if (!data.message) {
+          props.setCurrentUser(data);
+          navigate("/dashboard");
+        }
       })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
   };
 
   const items = [
