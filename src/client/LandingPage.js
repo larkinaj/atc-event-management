@@ -25,19 +25,19 @@ const LandingPage = (props) => {
       body: JSON.stringify(credentials)
     })
     .then((res)=>{
-      // if (res.status === 400) {
-      //   setLoginStatus('Invalid Username or Password')
-      // }
-      // else {
-      //   setLoginStatus()
-      // }
+      if (res.status === 400) {
+        setLoginStatus('Invalid Username or Password')
+      }
+      else {
+        setLoginStatus()
+      }
       return res.json()
     })
     .then((data) => {
       console.log(data)
-      // props.setCurrentUser(data)
-      // console.log(props.currentUser)
-      // navigate("/dashboard")
+      props.setCurrentUser(data)
+      console.log(props.currentUser)
+      navigate("/dashboard")
       fetch('http://localhost:3000/api/users/editUser/5', {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},

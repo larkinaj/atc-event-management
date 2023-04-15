@@ -32,11 +32,6 @@ let sessOpts = {
   secret: "secret cookie",
   resave: false,
   saveUninitialized: false,
-  // cookie: {
-  //     "SameSite": 'none',   // lax while working with http://localhost
-  //     "secure": true,  
-  //     "maxAge": 3600000
-  // }
 };
 
 app.use(session(sessOpts));  // creates req.session object
