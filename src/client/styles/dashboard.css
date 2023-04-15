@@ -1,13 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 html, body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-}
-
-.searchEventDropdown {
-  min-width: 150px;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
 .dashboard {
@@ -20,9 +16,13 @@ html, body {
 .queryBar {
   display: flex;
   align-items: center;
-  margin: 3rem;
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+  justify-content: center;
+  margin: 2rem !important;
+}
+
+.search-items {
+  margin: 0.25rem !important;
+  padding: 0 !important;
 }
 
 #search-bar {
@@ -30,27 +30,29 @@ html, body {
   padding: 16.5px;
 }
 
-.search-items {
-  margin: 10px;
-}
-
 .search-date {
   width: 300px;
 }
 
-.cardWrapper {
-  max-width: 400px;
-  margin: 0 auto;
+.searchEventDropdown {
+  min-width: 150px;
 }
 
 .eventCardContent {
-  width: 300px;
+  width: 95%; /* Screen shrink handling */
   height: 150px;
-  margin-bottom: 16px;
   padding: 8px !important;
 }
 
-.eventCardsWrapper {
-  margin-left: 5rem;
-  margin-right: 5rem;
+.allCardsWrapper {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  width: 100%;
+}
+
+.allCardsWrapper .MuiGrid-container {
+  display: flex;
+  align-items: center;
+  height: 150px;
+  padding: 8px !important;
 }
