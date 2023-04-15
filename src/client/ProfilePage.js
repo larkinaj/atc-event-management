@@ -40,22 +40,6 @@ const ProfilePage = (props) => {
   const [eventsAttended, updateEventsAttended] = React.useState([]); // Raw events array
 
   useEffect(async () => {
-    // readEventsRequest().then((data) => {
-    // data = data.sort((a, b) => {
-    //   let dateA = new Date(a.date_time);
-    //   let dateB = new Date(b.date_time);
-    //   return dateA - dateB;
-    // });
-    //   console.log(data);
-    //   updateEvents(data);
-    // const eventsHostingData = data.reduce((acc, curr) => {
-    //   if (curr.host_id === props.currentUser.user_id) {
-    //     acc.push(curr);
-    //   }
-    //   return acc;
-    // }, []);
-    //   updateEventsHosting(mappingCards(eventsHostingData, "hosting"));
-    // });
     const response = await axios.get("http://localhost:3000/api/users/getUserEvents", {
       withCredentials: true
     })
