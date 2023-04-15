@@ -97,7 +97,7 @@ const CreateEvent = (props) => {
 
     if (id) {
       const response = await axios.put(`http://localhost:3000/api/events/${id}`, {
-        event_id: id,
+        event_id: Number(id),
         event_name: nameOfEvent,
         industry: industryOfEvent,
         event_type: typeOfEvent,
