@@ -53,7 +53,7 @@ const App = () => {
           <Route path="/eventpage" element={<EventPage />} />
           <Route path={`/profile/${currentUser.username}`} element={<ProfilePage currentUser={currentUser} eventDetails={eventDetails} setEventDetails={setEventDetails} />} />
           <Route path="/create-event" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} currentUser={currentUser} />} />
-          <Route path="/registration" element={<Registration />} />
+          <Route path="/registration" element={<Registration currentUser={currentUser} setCurrentUser={setCurrentUser} />} />
           <Route path="/reset" element={<ForgotPassword />} />
           <Route path="/edit-event/:id" element={<CreateEvent eventDetails={eventDetails} setEventDetails={setEventDetails} currentUser={currentUser} />} />
         </Routes>

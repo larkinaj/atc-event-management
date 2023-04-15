@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import "./styles/registration.css";
 import { PhotoCamera, Description } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 const industries = [
   "Information Technology",
@@ -19,7 +20,10 @@ const industries = [
   "Food and Beverage",
 ];
 
-const Registration = () => {
+const Registration = (props) => {
+
+  const navigate = useNavigate();
+
   const [formValues, setFormValues] = useState({
     username: "",
     password: "",
@@ -182,7 +186,33 @@ const Registration = () => {
           color="primary"
           margin="normal"
           className="custom-margin"
-        >
+          onClick={ async (formValues) => {
+          try {
+            const response = await fetch("http://localhost:3000/api/users/register", {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                "username": formValues.username,
+                "password": formValues.password,
+                "first_name": formValues.firstName,
+                "last_name": formValues.lastName,
+                "email": formValues.email,
+                "bio": formValues.bio,
+                "industry": formValues.industry,
+                "resume": formValues.resume,
+                "picture": formValues.picture,
+                }),
+              });
+              const data = await response.json();
+              props.setCurrentUser(data);
+              navigate("/dashboard");
+            } catch (err) {
+              console.error('Error creating user: ', err);
+            }}}
+          >
           Register
         </Button>
         </div>
