@@ -1,7 +1,7 @@
 CREATE TABLE Events (
     event_id serial PRIMARY KEY NOT NULL,
-    event_name varchar(50) NOT NULL,
-    industry varchar(50) NOT NULL,
+    event_name varchar(255) NOT NULL,
+    industry varchar(255) NOT NULL,
     event_type varchar(255) NOT NULL,
     event_description text NOT NULL,
     host_id integer NOT NULL,
@@ -32,8 +32,8 @@ CREATE TABLE Users (
 
 CREATE TABLE Attendees (
     attendee_id serial PRIMARY KEY NOT NULL,
-    event_id integer REFERENCES Events(event_id) NOT NULL,
-    user_id integer REFERENCES Users(user_id) NOT NULL
+    event_id integer REFERENCES Events(event_id) ON DELETE CASCADE NOT NULL ,
+    user_id integer REFERENCES Users(user_id) ON DELETE CASCADE NOT NULL 
 ) WITH (
     OIDS = False
 );
@@ -41,9 +41,13 @@ CREATE TABLE Attendees (
 -- FUNCTION decrement_attendees_count
 CREATE OR REPLACE FUNCTION decrease_attendees_count()
 RETURNS TRIGGER AS $$
+DECLARE event_count INTEGER;
 BEGIN
+    SELECT COUNT(*) INTO event_count FROM events WHERE event_id = OLD.event_id;
+    IF event_count > 0 THEN
     UPDATE events SET total_attendees = total_attendees - 1 WHERE event_id = OLD.event_id;
     RAISE NOTICE 'Attendee deleted from event %', OLD.event_id;
+    END IF;
     RETURN OLD;
 END
 $$ LANGUAGE plpgsql;
@@ -58,8 +62,8 @@ EXECUTE FUNCTION decrease_attendees_count();
 CREATE OR REPLACE FUNCTION increase_attendees_count()
 RETURNS TRIGGER AS $$
 BEGIN
-    UPDATE events SET total_attendees = total_attendees + 1 WHERE event_id = OLD.event_id;
-    RAISE NOTICE 'New attendee added to event %', OLD.event_id;
+    UPDATE events SET total_attendees = total_attendees + 1 WHERE event_id = NEW.event_id;
+    RAISE NOTICE 'New attendee added to event %', NEW.event_id;
     RETURN NEW;
 END
 $$ LANGUAGE plpgsql;
