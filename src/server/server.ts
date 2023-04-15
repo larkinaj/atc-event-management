@@ -32,10 +32,6 @@ let sessOpts = {
   secret: "secret cookie",
   resave: false,
   saveUninitialized: false,
-  cookie: {
-      "secure": false,
-      "maxAge": 3600000
-  }
 };
 
 app.use(session(sessOpts));  // creates req.session object

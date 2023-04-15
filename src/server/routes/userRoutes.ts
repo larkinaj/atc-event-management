@@ -17,7 +17,7 @@ userRoutes.post('/register', userController.createUser, (req: Request, res: Resp
                 else res.status(200).json(res.locals.newUser);  // send back new user info
             });
         } else {  // registerSuccess === false
-            res.status(400).send('Registration failed');
+            res.status(406).json({message: 'Registration failed'});
         }
     } catch (err) {
         next({log: 'error in user registration', message: err});
@@ -34,7 +34,7 @@ userRoutes.post('/login', (req: Request, res: Response, next: NextFunction):void
             console.log('info', info);
 
             if (err) throw err; 
-            if (!user) res.status(400).send('You do not have permission to log in');
+            if (!user) res.status(401).json({message: 'You are not authorized to take this action'});
             else {
                 // successful log in
                 req.logIn(user, (err: Error) => {
@@ -53,7 +53,7 @@ userRoutes.delete('/logout', (req: Request, res: Response, next: NextFunction):v
     try {
         req.logout(function (err: Error) {
             if (err) throw err; 
-            res.status(200).send('Logged you out!');
+            res.status(200).json({message: 'Logged you out!'});
         });
     } catch (err) {
         next({log: 'something went wrong in passport logout', message: err});
@@ -61,19 +61,21 @@ userRoutes.delete('/logout', (req: Request, res: Response, next: NextFunction):v
 });
 
 // get events attending / get events hosted by user 
-// userRoutes.get('/getUser/events', userController.getUserEvents, (req: Request, res:Response, next:NextFunction):void => {
-//     try {
-//         res.status(200);
-//     } catch (err) {
-//         next({log: 'error in getting user-specific events', message: err});
-//     }
-// });
+userRoutes.get('/getUser/events', userController.getUserEvents, (req: Request, res:Response, next:NextFunction):void => {
+    try {
+        if (!res.locals.loggedIn) res.status(401).json({message: 'You are not authorized to take this action'});
+        else if (!res.locals.userEvents) res.status(400).json({message: 'User has no events!'});
+        else res.status(200).json(res.locals.userEvents);
+    } catch (err) {
+        next({log: 'error in getting user-specific events', message: err});
+    }
+});
 
 // get user's info 
 userRoutes.get('/getUser', userController.getUser, (req: Request, res:Response, next:NextFunction):void => {
     try {
        if (res.locals.userInfo && res.locals.loggedIn) res.send(200).json(res.locals.userInfo);
-       else res.status(400).send('You must log in or register');
+       else res.status(401).json({message: 'You are not authorized to take this action'});
     } catch (err) {
        next({log: 'error in getting user data', message: err});
     }
@@ -82,8 +84,8 @@ userRoutes.get('/getUser', userController.getUser, (req: Request, res:Response, 
 // edit user profile info
 userRoutes.put('/editUser/:id', userController.editUser, (req: Request, res: Response, next: NextFunction):void => {
     try {
-        if (!res.locals.loggedIn) res.status(400).send('You must log in or register');
-        else if (!res.locals.editedUser) res.status(400).send('No such user exists!');
+        if (!res.locals.loggedIn) res.status(401).json({message: 'You are not authorized to take this action'});
+        else if (!res.locals.editedUser) res.status(400).json({message: 'No such user exists!'});
         else res.status(200).json(res.locals.editedUser);
     } catch (err) {
         return next({log: 'Error in edit user route', message: err});
@@ -93,8 +95,8 @@ userRoutes.put('/editUser/:id', userController.editUser, (req: Request, res: Res
 // delete user from db completely
 userRoutes.delete('/deleteUser', userController.deleteUser, (req: Request, res: Response, next: NextFunction):void => {
     try {
-        if (!res.locals.loggedIn) res.status(400).send('You are not authorized to take this action');
-        else if (!res.locals.deletedUser) res.status(400).send('No such user exists!');
+        if (!res.locals.loggedIn) res.status(401).json({message: 'You are not authorized to take this action'});
+        else if (!res.locals.deletedUser) res.status(400).json({message: 'No such user exists!'});
         else res.status(200).json(res.locals.deletedUser);  // deleting a user should redirect to log user out
     } catch (err) {
         return next({log: 'Error in delete user route', message: err});
