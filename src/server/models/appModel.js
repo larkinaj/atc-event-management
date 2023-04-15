@@ -3,6 +3,8 @@ import pg from 'pg';
 
 // const PG_URI = "postgres://wbpifxvw:q8lghllZohqY4rkyYdpyF64er5iguO96@heffalump.db.elephantsql.com/wbpifxvw";
 // const PG_URI = "postgres://dvbusoaz:wrzUMGq27Wjwcs14lIS2CNZGpDwPlXSp@tiny.db.elephantsql.com/dvbusoaz";
+
+// Kareem's old elephantSQL URI
 // const PG_URI = "postgres://lxigtjgl:wP50ncLWiiuuLCbVnZdsgx2XaV5ar3tr@lallah.db.elephantsql.com/lxigtjgl";
 
 // kareem's most updated elephantSQL URI 

@@ -9,16 +9,26 @@ const userRoutes = express.Router();
 userRoutes.post('/register', userController.createUser, (req: Request, res: Response, next:NextFunction):void => {
     // user registers with the necessary information 
     try {
-        if (res.locals.registerSuccess) {
-            // send back success --> so front-end can reroute
-            // log user in to begin session 
-            req.logIn(res.locals.newUser, (err: Error) => {
-                if (err) throw err; 
-                else res.status(200).json(res.locals.newUser);  // send back new user info
-            });
-        } else {  // registerSuccess === false
-            res.status(406).json({message: 'Registration failed'});
-        }
+
+        // // if an internal server error has been passed along --> most likely 
+        // if (res.locals.error) {
+        //     // add an extra field indicating uniqueness constraint was violated
+        //     res.locals.errCode = res.locals.error.code ? res.locals.error.code : -1000;
+        //     res.status(500).json({code: res.locals.errCode, errObj: res.locals.error}); 
+        // } else {
+
+            if (res.locals.registerSuccess) {
+                // send back success --> so front-end can reroute
+                // log user in to begin session 
+                req.logIn(res.locals.newUser, (err: Error) => {
+                    if (err) throw err; 
+                    else res.status(200).json(res.locals.newUser);  // send back new user info
+                });
+            } else {  // registerSuccess === false
+                res.status(406).json({message: 'Registration failed'});
+            }
+
+        // }   
     } catch (err) {
         next({log: 'error in user registration', message: err});
     } 
@@ -64,7 +74,9 @@ userRoutes.delete('/logout', (req: Request, res: Response, next: NextFunction):v
 userRoutes.get('/getUserEvents', userController.getUserEvents, (req: Request, res:Response, next:NextFunction):void => {
     try {
         if (!res.locals.loggedIn) res.status(401).json({message: 'You are not authorized to take this action'});
-        else if (!res.locals.userEvents) res.status(400).json({message: 'User has no events!'});
+        else if (!res.locals.userEvents.hosting[0] && 
+                    !res.locals.userEvents.attending[0] &&
+                        !res.locals.userEvents.attended[0]) res.status(400).json({message: 'User has no events!'});
         else res.status(200).json(res.locals.userEvents);
     } catch (err) {
         next({log: 'error in getting user-specific events', message: err});
