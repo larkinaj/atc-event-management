@@ -60,7 +60,7 @@ RETURNS TRIGGER AS $$
 BEGIN
     UPDATE events SET total_attendees = total_attendees + 1 WHERE event_id = OLD.event_id;
     RAISE NOTICE 'New attendee added to event %', OLD.event_id;
-    RETURN NEW;
+    RETURN NEW;  -- how are NEW and OLD defined here ? ---> possible cause of issue ?
 END
 $$ LANGUAGE plpgsql;
 

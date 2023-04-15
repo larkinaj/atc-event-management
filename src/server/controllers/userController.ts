@@ -167,14 +167,14 @@ const userController = {
             LEFT JOIN attendees 
             ON events.event_id = attendees.event_id
             WHERE user_id = $1
-            AND event_status = true
+            AND date_time >= now()
             ORDER BY date_time ASC;`;
 
             const attendedSQL = `SELECT * FROM events 
             LEFT JOIN attendees 
             ON events.event_id = attendees.event_id
             WHERE user_id = $1
-            AND event_status = false
+            AND date_time < now()
             ORDER BY date_time ASC;`;
 
             const hostRes: any = await query(hostSQL, [ req.user.user_id ]);
