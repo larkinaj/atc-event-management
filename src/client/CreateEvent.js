@@ -18,7 +18,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import { PhotoCamera } from "@mui/icons-material";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import "./styles/create-event.css";
 import Header from "./Header";
@@ -116,7 +116,6 @@ const CreateEvent = (props) => {
         picture: null,
       });
       console.log('database response',response);
-      window.location.href = 'http://localhost:8080/dashboard';
     }
     if (!id) {
       const response = await axios.post("http://localhost:3000/api/events", {
@@ -133,7 +132,6 @@ const CreateEvent = (props) => {
         picture: null,
       });
       console.log('database response',response);
-      window.location.href = 'http://localhost:8080/dashboard';
     }
 
     props.setEventDetails({
