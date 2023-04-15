@@ -154,7 +154,7 @@ const ProfilePage = (props) => {
                     </Button>
                     <Button
                       sx={{ marginTop: 1 }}
-                      onClick={() => editEventButton(event)}
+                      onClick={() => deleteEventButton(event.event_id)}
                     >
                       Delete Event
                     </Button>
@@ -222,7 +222,7 @@ const ProfilePage = (props) => {
 
   return (
     <div>
-      <Header />
+      <Header currentUser={props.currentUser}/>
       <div className="profile-page">
         <div className="user-info-column">
           <Avatar

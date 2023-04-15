@@ -33,17 +33,17 @@ import Header from "./Header";
 import testEvents from "./testEvent";
 
 const Dashboard = (props) => {
-  console.log('current user', props.currentUser)
+  console.log("current user", props.currentUser);
   const [events, updateEvents] = React.useState([]); // Raw events array
   const [eventCards, updateEventCards] = React.useState([]); // Array of event cards
 
   useEffect(() => {
     readEventsRequest().then((data) => {
       data = data.sort((a, b) => {
-        let dateA = new Date(a.date_time)
-        let dateB = new Date(b.date_time)
-        return dateA - dateB
-      })
+        let dateA = new Date(a.date_time);
+        let dateB = new Date(b.date_time);
+        return dateA - dateB;
+      });
       console.log(data);
       updateEvents(data);
       data = mapEvents(data);
@@ -200,32 +200,15 @@ const Dashboard = (props) => {
 
   return (
     <div>
-      <Header />
+      <Header currentUser={props.currentUser} />
       <div className="dashboard">
         <Grid container className="queryBar" spacing={2}>
           <Grid item className="search-items">
             <TextField
-              id="search-bar"
               className="search-items"
               onChange={searchChange}
               variant="outlined"
               placeholder="Search..."
-              size="small"
-              // InputProps={{
-              //   endAdornment: (
-              //     <InputAdornment position="end">
-              //       <IconButton
-              //         onClick={searchEvents}
-              //         className="searchIcon"
-              //         type="button"
-              //         sx={{ p: "10px" }}
-              //         aria-label="search"
-              //       >
-              //         <Search className="searchIcon" />
-              //       </IconButton>
-              //     </InputAdornment>
-              //   ),
-              // }}
             />
           </Grid>
           <Grid item className="search-items">
@@ -237,6 +220,7 @@ const Dashboard = (props) => {
                 onChange={dateChange}
                 slots={{ field: SingleInputDateRangeField }}
                 label="Pick a date"
+                s
               />
             </LocalizationProvider>
           </Grid>
@@ -291,8 +275,21 @@ const Dashboard = (props) => {
             </FormControl>
           </Grid>
           <Grid item className="search-items">
-          <Button variant="contained" sx={{ paddingLeft: "40px", paddingRight: "40px", paddingTop: "14px", paddingBottom: "14px" }}>Search</Button>
-        </Grid>
+            <Button
+              variant="contained"
+              sx={{
+                paddingLeft: "40px",
+                paddingRight: "40px",
+                paddingTop: "15.75px",
+                paddingBottom: "15.75px",
+                backgroundColor: "#003366",
+                "&:hover": { backgroundColor: "#00274d" },
+              }}
+              onClick={searchEvents}
+            >
+              Search
+            </Button>
+          </Grid>
         </Grid>
         <div className="allCardsWrapper">
           <Grid container spacing={2}>

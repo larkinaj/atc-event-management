@@ -18,10 +18,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import { PhotoCamera } from "@mui/icons-material";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import "./styles/create-event.css";
+import Header from "./Header";
 
 const CreateEvent = (props) => {
+
+  const navigate = useNavigate();
 
   const [eventDateTime, setEventDateTime] = useState(dayjs(new Date()));
   const { id } = useParams()
@@ -130,12 +134,24 @@ const CreateEvent = (props) => {
       console.log('database response',response);
     }
 
+    props.setEventDetails({
+      nameOfEvent: '',
+      industryOfEvent: '',
+      typeOfEvent: '',
+      descriptionOfEvent: '',
+      locationOfEvent: '',
+      priceOfEvent: '',
+      imageOfEvent: '',
+    });
+    navigate("/dashboard");
   };
 
 
   const formTitle = id ? "Edit Event" : "Create Event";
 
   return (
+    <div>
+      <Header currentUser={props.currentUser}/>
     <div className="createEventPage">
       <Typography variant="h4" sx={{ margin: "0.5rem" }}>{formTitle}</Typography>
       <div className="createEventBox">
@@ -297,6 +313,7 @@ const CreateEvent = (props) => {
           Submit Form
         </Button>
       </div>
+    </div>
     </div>
   );
 };

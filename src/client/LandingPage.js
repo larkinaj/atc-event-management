@@ -10,6 +10,7 @@ import { PropaneSharp } from "@mui/icons-material";
 const LandingPage = (props) => {
   const navigate = useNavigate();
   const [loginStatus, setLoginStatus] = React.useState(); // Raw events array
+  
   const loginUser = (event) => {
     event.preventDefault();
     let credentials = {
@@ -109,6 +110,31 @@ const LandingPage = (props) => {
             <div className="loginInputs">
               <h2>Login</h2>
               <TextField
+                fullWidth
+                required
+                variant="outlined"
+                margin="normal"
+                label="Username"
+                name="userLogin"
+                // value={formValues.username}
+                // onChange={handleChange}
+                size="small"
+                className="custom-margin"
+              />
+              <TextField
+                fullWidth
+                required
+                variant="outlined"
+                margin="normal"
+                label="Password"
+                name="passLogin"
+                type="password"
+                // value={formValues.password}
+                // onChange={handleChange}
+                size="small"
+                className="custom-margin"
+              />
+              {/* <TextField
                 required
                 id="outlined-required"
                 name="userLogin"
@@ -162,7 +188,7 @@ const LandingPage = (props) => {
                     },
                   },
                 }}
-              />
+              /> */}
             </div>
             <span style={{color: "red" }}>
               {loginStatus}
