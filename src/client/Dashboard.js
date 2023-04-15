@@ -37,21 +37,26 @@ const Dashboard = () => {
   const [eventCards, updateEventCards] = React.useState([]); // Array of event cards
 
   useEffect(() => {
-    // readEventsRequest().then((data) => {
-    //   console.log(data);
-    //   updateEvents(data);
-    //   data = mapEvents(data);
-    //   updateEventCards(data);
-    // });
-    let data = testEvents;
-    data = data.sort((a, b) => {
-      let dateA = new Date(dateConverter(a.date_time))
-      let dateB = new Date(dateConverter(b.date_time))
-      return dateA - dateB
-    })
-    updateEvents(data);
-    data = mapEvents(data);
-    updateEventCards(data);
+    readEventsRequest().then((data) => {
+      data = data.sort((a, b) => {
+        let dateA = new Date(dateConverter(a.date_time))
+        let dateB = new Date(dateConverter(b.date_time))
+        return dateA - dateB
+      })
+      console.log(data);
+      updateEvents(data);
+      data = mapEvents(data);
+      updateEventCards(data);
+    });
+    // let data = testEvents;
+    // data = data.sort((a, b) => {
+    //   let dateA = new Date(dateConverter(a.date_time))
+    //   let dateB = new Date(dateConverter(b.date_time))
+    //   return dateA - dateB
+    // })
+    // updateEvents(data);
+    // data = mapEvents(data);
+    // updateEventCards(data);
   }, []);
 
   // Helper function for creating an array of event cards from the raw events array
