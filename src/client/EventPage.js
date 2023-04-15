@@ -1,13 +1,20 @@
-import React from 'react';
-import { Container, Grid, Typography, Button, Paper, CardMedia } from '@mui/material';
-import { Box } from '@mui/system';
-import './styles/eventpage.css';
-import Header from './Header';
+import React from "react";
+import {
+  Container,
+  Grid,
+  Typography,
+  Button,
+  Paper,
+  CardMedia,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import "./styles/eventpage.css";
+import Header from "./Header";
 
-const EventPage = () => {
+const EventPage = (props) => {
   return (
     <div>
-      <Header />
+      <Header currentUser={props.currentUser} />
       <div className="event-page">
         <Container>
           <Box mb={3}>
@@ -65,29 +72,27 @@ const EventPage = () => {
                   <Typography variant="h5" component="h2">
                     Get Tickets
                   </Typography>
-                  <Typography variant="body1">
-                    Price: $10 - $20
-                  </Typography>
+                  <Typography variant="body1">Price: $10 - $20</Typography>
                   <Box my={2}>
-                    <Button 
+                    <Button
                       variant="contained"
-                      color="primary" 
+                      color="primary"
                       fullWidth
                       sx={{
-                        backgroundColor: '#003366',
-                        '&:hover': {
-                          backgroundColor: '#00274d',
+                        backgroundColor: "#003366",
+                        "&:hover": {
+                          backgroundColor: "#00274d",
                         },
-                        border: 'none',
-                        borderRadius: '4px',
-                        color: 'white',
-                        fontSize: '12px',
-                        fontWeight: '600',
-                        padding: '10px',
-                        cursor: 'pointer',
-                        marginTop: '10px',
-                        paddingLeft: '30px',
-                        paddingRight: '30px',
+                        border: "none",
+                        borderRadius: "4px",
+                        color: "white",
+                        fontSize: "12px",
+                        fontWeight: "600",
+                        padding: "10px",
+                        cursor: "pointer",
+                        marginTop: "10px",
+                        paddingLeft: "30px",
+                        paddingRight: "30px",
                       }}
                     >
                       Register

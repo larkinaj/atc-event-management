@@ -9,7 +9,6 @@ import "./styles/header.css";
 import { useNavigate } from "react-router-dom";
 
 const Header = (props) => {
-
   const navigate = useNavigate();
 
   return (
@@ -56,24 +55,26 @@ const Header = (props) => {
               fontWeight: "bold",
               "&:hover": { backgroundColor: "#1976D2", color: "#FFFFFF" },
             }}
-            onClick={ async () => {
+            onClick={async () => {
               try {
-                const response = await fetch("http://localhost:3000/api/users/logout", {
-                  method: 'DELETE',
-                  credentials: 'include',
-                  headers: {
-                    "Content-Type": "application/json",
+                const response = await fetch(
+                  "http://localhost:3000/api/users/logout",
+                  {
+                    method: "DELETE",
+                    credentials: "include",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
                   }
-                })
+                );
                 if (response.status === 200) {
                   console.log("Logged out successfully");
                   navigate("/");
+                } else {
+                  console.error("Error deleting event:", response.status);
                 }
-                else {
-                  console.error('Error deleting event:', response.status);
-                }
-              } catch(err) {
-                console.error('Error deleting event:', err);
+              } catch (err) {
+                console.error("Error deleting event:", err);
               }
             }}
           >

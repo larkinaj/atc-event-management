@@ -36,6 +36,7 @@ const Dashboard = (props) => {
   console.log("current user", props.currentUser);
   const [events, updateEvents] = React.useState([]); // Raw events array
   const [eventCards, updateEventCards] = React.useState([]); // Array of event cards
+  const [registeredStatus, updateRegisteredStatus] = React.useState(false);
 
   useEffect(() => {
     readEventsRequest().then((data) => {
@@ -48,6 +49,12 @@ const Dashboard = (props) => {
       updateEvents(data);
       data = mapEvents(data);
       updateEventCards(data);
+      // for (let i = 0; i < data.length; i++) {
+      //   updateRegisteredStatus((prev) => {
+      //     const eventid = data[i][event_id];
+      //     return { ...prev, eventid: false };
+      //   });
+      // }
     });
   }, []);
 
@@ -109,7 +116,36 @@ const Dashboard = (props) => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small">Register</Button>
+                  {/* {registeredStatus.event.event_id ? ( */}
+                  {registeredStatus ? (
+                    <Typography variant="body2" sx={{ wordWrap: "break-word" }}>
+                      You are registered for this event
+                    </Typography>
+                  ) : (
+                    <Button
+                      size="small"
+                      onClick={async () => {
+                        try {
+                          const response = await fetch(
+                            `http://localhost:3000/api/${event.event_id}/${props.currentUser.user_id}`,
+                            {
+                              method: "PUT",
+                              credentials: "include",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                            }
+                          );
+                          const data = await response.json();
+                          updateRegisteredStatus(true);
+                        } catch (err) {
+                          console.error("Error registering for event: ", err);
+                        }
+                      }}
+                    >
+                      Register
+                    </Button>
+                  )}
                 </CardActions>
               </React.Fragment>
             </Card>

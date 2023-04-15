@@ -14,12 +14,12 @@ import "./styles/profile-page.css";
 import { BoltRounded, Search, Description } from "@mui/icons-material"; // default exports vs named exports
 import readEventsRequest from "./api/readEventsRequest";
 import dateConverter from "./helperFunction";
-import deleteEventRequest from './api/deleteEventRequest';
+import deleteEventRequest from "./api/deleteEventRequest";
 import Header from "./Header";
 
 const ProfilePage = (props) => {
   const navigate = useNavigate();
-  console.log('current user', props.currentUser)
+  console.log("current user", props.currentUser);
   function stringAvatar(name) {
     return {
       sx: {
@@ -40,10 +40,10 @@ const ProfilePage = (props) => {
   useEffect(() => {
     readEventsRequest().then((data) => {
       data = data.sort((a, b) => {
-        let dateA = new Date(a.date_time)
-        let dateB = new Date(b.date_time)
-        return dateA - dateB
-      })
+        let dateA = new Date(a.date_time);
+        let dateB = new Date(b.date_time);
+        return dateA - dateB;
+      });
       console.log(data);
       updateEvents(data);
       const eventsHostingData = data.reduce((acc, curr) => {
@@ -64,10 +64,10 @@ const ProfilePage = (props) => {
       descriptionOfEvent: event.event_description,
       locationOfEvent: event.event_location,
       priceOfEvent: Number(event.event_price),
-      imageOfEvent: '',
-    })
-    navigate("/edit-event/" + event.event_id)
-  }
+      imageOfEvent: "",
+    });
+    navigate("/edit-event/" + event.event_id);
+  };
 
   const handleFileChange = (event) => {
     const { name, files } = event.target;
@@ -80,14 +80,14 @@ const ProfilePage = (props) => {
   };
 
   const deleteEventButton = (id) => {
-    deleteEventRequest(id).then((data)=>{
-      console.log('data returned from delete', data);
+    deleteEventRequest(id).then((data) => {
+      console.log("data returned from delete", data);
       readEventsRequest().then((data) => {
         data = data.sort((a, b) => {
-          let dateA = new Date(dateConverter(a.date_time))
-          let dateB = new Date(dateConverter(b.date_time))
-          return dateA - dateB
-        })
+          let dateA = new Date(dateConverter(a.date_time));
+          let dateB = new Date(dateConverter(b.date_time));
+          return dateA - dateB;
+        });
         updateEvents(data);
         const eventsHostingData = data.reduce((acc, curr) => {
           if (curr.host_id === props.currentUser.user_id) {
@@ -95,11 +95,10 @@ const ProfilePage = (props) => {
           }
           return acc;
         }, []);
-        updateEventsHosting(mappingCards(eventsHostingData, 'hosting'));
-      })
-    })
-  }
-
+        updateEventsHosting(mappingCards(eventsHostingData, "hosting"));
+      });
+    });
+  };
 
   const mappingCards = (arrayOfData, typeOfEvents) => {
     if (typeOfEvents === "hosting") {
@@ -222,7 +221,7 @@ const ProfilePage = (props) => {
 
   return (
     <div>
-      <Header currentUser={props.currentUser}/>
+      <Header currentUser={props.currentUser} />
       <div className="profile-page">
         <div className="user-info-column">
           <Avatar
@@ -230,28 +229,35 @@ const ProfilePage = (props) => {
               props.currentUser.first_name + " " + props.currentUser.last_name
             )}
           />
-          <Typography variant="h6" gutterBottom>
-            {props.currentUser.username} | {props.currentUser.first_name}{" "}
-            {props.currentUser.last_name}
-          </Typography>
-          <Typography variant="h6" gutterBottom>
-            {props.currentUser.email}
-          </Typography>
+          <div>
+            <Typography variant="h6" gutterBottom>
+              {props.currentUser.username} | {props.currentUser.first_name}{" "}
+              {props.currentUser.last_name}
+            </Typography>
+            <Typography variant="h6" gutterBottom>
+              {props.currentUser.email}
+            </Typography>
+            <Typography variant="h6" gutterBottom>
+              {props.currentUser.industry}
+            </Typography>
+            <Typography variant="h6" gutterBottom>
+              {props.currentUser.bio}
+            </Typography>
+          </div>
           <Button
             fullWidth
             variant="contained"
             component="label"
             margin="normal"
             className="custom-margin"
-            sx={{ width: "200px", backgroundColor: "#003366", '&:hover': { backgroundColor: "#00274d" } }}
+            sx={{
+              width: "200px",
+              backgroundColor: "#003366",
+              "&:hover": { backgroundColor: "#00274d" },
+            }}
+            onClick={() => navigate("/edituserinfo")}
           >
             Edit User Info
-            <input
-              type="file"
-              hidden
-              name="resume"
-              onChange={handleUserInfoChange}
-            />
           </Button>
           <Button
             fullWidth
@@ -259,7 +265,11 @@ const ProfilePage = (props) => {
             component="label"
             margin="normal"
             className="custom-margin"
-            sx={{ width: "200px", backgroundColor: "#003366", '&:hover': { backgroundColor: "#00274d" } }}
+            sx={{
+              width: "200px",
+              backgroundColor: "#003366",
+              "&:hover": { backgroundColor: "#00274d" },
+            }}
           >
             Upload Resume
             <Description sx={{ marginLeft: "5px", fontSize: "1rem" }} />
