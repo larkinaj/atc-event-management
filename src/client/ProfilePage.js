@@ -16,6 +16,7 @@ import readEventsRequest from "./api/readEventsRequest";
 import dateConverter from "./helperFunction";
 import deleteEventRequest from "./api/deleteEventRequest";
 import Header from "./Header";
+import axios from "axios";
 
 const ProfilePage = (props) => {
   const navigate = useNavigate();
@@ -36,24 +37,47 @@ const ProfilePage = (props) => {
   const [events, updateEvents] = React.useState([]); // Raw events array
   const [eventsHosting, updateEventsHosting] = React.useState([]); // Raw events array
   const [eventsAttending, updateEventsAttending] = React.useState([]); // Raw events array
+  const [eventsAttended, updateEventsAttended] = React.useState([]); // Raw events array
 
-  useEffect(() => {
-    readEventsRequest().then((data) => {
-      data = data.sort((a, b) => {
-        let dateA = new Date(a.date_time);
-        let dateB = new Date(b.date_time);
-        return dateA - dateB;
-      });
-      console.log(data);
-      updateEvents(data);
-      const eventsHostingData = data.reduce((acc, curr) => {
-        if (curr.host_id === props.currentUser.user_id) {
-          acc.push(curr);
-        }
-        return acc;
-      }, []);
-      updateEventsHosting(mappingCards(eventsHostingData, "hosting"));
+  useEffect(async () => {
+    // readEventsRequest().then((data) => {
+    // data = data.sort((a, b) => {
+    //   let dateA = new Date(a.date_time);
+    //   let dateB = new Date(b.date_time);
+    //   return dateA - dateB;
+    // });
+    //   console.log(data);
+    //   updateEvents(data);
+    // const eventsHostingData = data.reduce((acc, curr) => {
+    //   if (curr.host_id === props.currentUser.user_id) {
+    //     acc.push(curr);
+    //   }
+    //   return acc;
+    // }, []);
+    //   updateEventsHosting(mappingCards(eventsHostingData, "hosting"));
+    // });
+    const response = await axios.get("http://localhost:3000/api/users/getUserEvents", {
+      withCredentials: true
+    })
+    const events = response.data;
+    events.hosting = events.hosting.sort((a, b) => {
+      let dateA = new Date(a.date_time);
+      let dateB = new Date(b.date_time);
+      return dateA - dateB;
     });
+    events.attending = events.attending.sort((a, b) => {
+      let dateA = new Date(a.date_time);
+      let dateB = new Date(b.date_time);
+      return dateA - dateB;
+    });
+    events.attended = events.attended.sort((a, b) => {
+      let dateA = new Date(a.date_time);
+      let dateB = new Date(b.date_time);
+      return dateA - dateB;
+    });
+    updateEventsHosting(mappingCards(events.hosting, "hosting"));
+    updateEventsAttending(mappingCards(events.attending, "attended"))
+    updateEventsAttended(mappingCards(events.attended, "attended"))
   }, []);
 
   const editEventButton = (event) => {
@@ -303,7 +327,7 @@ const ProfilePage = (props) => {
               Events I'm attending
             </Typography>
             <Grid container spacing={2} sx={{ marginBottom: "2rem" }}>
-              {eventsHosting}
+              {eventsAttending}
             </Grid>
           </div>
           <div className="attended">
@@ -315,7 +339,7 @@ const ProfilePage = (props) => {
               Events I attended
             </Typography>
             <Grid container spacing={2} sx={{ marginBottom: "2rem" }}>
-              {eventsHosting}
+              {eventsAttended}
             </Grid>
           </div>
         </div>

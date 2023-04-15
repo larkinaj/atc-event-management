@@ -166,7 +166,7 @@ const EditUserInfo = (props) => {
           className="custom-margin"
           onClick={ async () => {
           try {
-            const response = await fetch(`http://localhost:3000/api/users/editUser/${props.currentUser.user_id}`, {
+            const response = await fetch(`http://localhost:3000/api/users/editUser/`, {
               method: 'PUT',
               credentials: 'include',
               headers: {
