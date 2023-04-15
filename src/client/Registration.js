@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import "./styles/registration.css";
+import { PhotoCamera, Description } from "@mui/icons-material";
 
 const industries = [
   "Information Technology",
@@ -49,7 +50,7 @@ const Registration = () => {
   return (
     <div className="registration-page">
     <Container className="signUp" maxWidth="xs">
-      <Typography variant="h4">Sign Up</Typography>
+      <Typography variant="h4" sx={{ margin: "0.5rem", textAlign: "center" }}>Sign Up</Typography>
       <form onSubmit={handleSubmit} noValidate>
         <TextField
           fullWidth
@@ -154,10 +155,19 @@ const Registration = () => {
         <div className="reg-buttons">
         <Button fullWidth variant="contained" component="label" margin="normal" className="custom-margin">
           Upload Resume
+          <Description sx={{ marginLeft: "5px", fontSize: "1rem" }} />
           <input type="file" hidden name="resume" onChange={handleFileChange} />
         </Button>
-        <Button fullWidth variant="contained" component="label" margin="normal" className="custom-margin">
-          Upload Picture
+        <Button
+          fullWidth
+          component="label"
+          variant="contained"
+          margin="normal"
+          color="primary"
+          className="custom-margin"
+        >
+          Upload Picture 
+          <PhotoCamera sx={{ marginLeft: "5px", fontSize: "1rem" }} />
           <input
             type="file"
             hidden
