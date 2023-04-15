@@ -116,6 +116,7 @@ const CreateEvent = (props) => {
         picture: null,
       });
       console.log('database response',response);
+      window.location.href = 'http://localhost:8080/dashboard';
     }
     if (!id) {
       const response = await axios.post("http://localhost:3000/api/events", {
@@ -132,6 +133,7 @@ const CreateEvent = (props) => {
         picture: null,
       });
       console.log('database response',response);
+      window.location.href = 'http://localhost:8080/dashboard';
     }
 
     props.setEventDetails({
