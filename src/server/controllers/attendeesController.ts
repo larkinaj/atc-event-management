@@ -23,12 +23,13 @@ const attendeesController = {
             if(res.locals.isAttending){
                 console.log('user is attending')
                 res.status(300).json('user already attending event');
-            } 
-            const {event_id, user_id} = req.params;
-            const request = 'INSERT INTO attendees (event_id, user_id) VALUES ($1, $2) RETURNING *';
-            const values: any = [event_id, user_id];
-            const response: any = await query(request, values);
-            res.locals.attendee = response.rows;
+            } else {
+                const {event_id, user_id} = req.params;
+                const request = 'INSERT INTO attendees (event_id, user_id) VALUES ($1, $2) RETURNING *';
+                const values: any = [event_id, user_id];
+                const response: any = await query(request, values);
+                res.locals.attendee = response.rows;
+            }
             return next();
         } catch (err) {
             return (next({
