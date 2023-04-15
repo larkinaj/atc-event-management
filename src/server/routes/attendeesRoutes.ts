@@ -8,6 +8,11 @@ attendeesRouter.get('/:event_id', attendeesController.getAttendees, (_req: Reque
     res.status(200).json(res.locals.attendees);
 })
 
+attendeesRouter.get('/isAttending/:event_id/:user_id', attendeesController.isAttending, (_req: Request, res: Response, _next: NextFunction) : void =>{
+
+    res.status(200).json(res.locals.isAttending);
+})
+
 attendeesRouter.post('/:event_id/:user_id', attendeesController.isAttending, attendeesController.postAttendee, (_req: Request, res: Response, _next: NextFunction) : void =>{
 
         res.status(200).json(res.locals.attendee);

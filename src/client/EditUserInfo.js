@@ -23,19 +23,30 @@ const industries = [
 
 const EditUserInfo = (props) => {
 
-  const navigate = useNavigate();
-
-  const [formValues, setFormValues] = useState({
-    username: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    bio: "",
-    industry: "",
+  const userInfo = {
+    username: props.currentUser.username,
+    password: props.currentUser.password,
+    firstName: props.currentUser.first_name,
+    lastName: props.currentUser.last_name,
+    email: props.currentUser.email,
+    bio: props.currentUser.bio,
+    industry: props.currentUser.industry,
     resume: null,
     picture: null,
-  });
+  }
+  const navigate = useNavigate();
+  // const [formValues, setFormValues] = useState({
+  //   username: "",
+  //   password: "",
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   bio: "",
+  //   industry: "",
+  //   resume: null,
+  //   picture: null,
+  // });
+  const [formValues, setFormValues] = useState(userInfo);
 
   const handleChange = (event) => {
     const { name, value } = event.target;

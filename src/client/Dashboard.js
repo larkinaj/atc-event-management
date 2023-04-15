@@ -34,11 +34,16 @@ import testEvents from "./testEvent";
 
 import { useNavigate } from "react-router-dom";
 
+import axios from 'axios';
+
 const Dashboard = (props) => {
   console.log("current user", props.currentUser);
   const [events, updateEvents] = React.useState([]); // Raw events array
   const [eventCards, updateEventCards] = React.useState([]); // Array of event cards
-  const [registeredStatus, updateRegisteredStatus] = React.useState(false);
+
+  // const [totalAttendees, setTotalAttendees] = React.useState(event.total_attendees);
+
+  // const [registeredStatus, updateRegisteredStatus] = React.useState(false);
 
   const navigate = useNavigate();
 
@@ -58,19 +63,15 @@ const Dashboard = (props) => {
       updateEvents(data);
       data = mapEvents(data);
       updateEventCards(data);
-      // for (let i = 0; i < data.length; i++) {
-      //   updateRegisteredStatus((prev) => {
-      //     const eventid = data[i][event_id];
-      //     return { ...prev, eventid: false };
-      //   });
-      // }
     });
   }, []);
 
   // Helper function for creating an array of event cards from the raw events array
   const mapEvents = (eventsArray) => {
-    return eventsArray.map((event, i) => {
-      console.log("Event in mapEvents:", event);
+    return eventsArray.map( (event, i) => {     
+      // const response = await axios.get(`http://localhost:3000/api/attendees/isAttending/${event.event_id}/${props.currentUser.user_id}`)
+      // const isAttending = response.data;
+      // console.log("isAttending: ", isAttending);
       return (
         <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
           <div>
@@ -103,16 +104,6 @@ const Dashboard = (props) => {
                   >
                     {event.date_time}
                   </Typography>
-                  {/* <Link
-                  to={{
-                    pathname: `/event/${event.event_id}`,
-                    state: { event },
-                  }}
-                  onClick={() => {
-                    console.log("Clicked event: ", event);
-                    console.log("Link state: ", { event });
-                  }}
-                  > */}
                     <div onClick={() => handleClick(event)}>
                     <Typography
                       variant="h6"
@@ -128,7 +119,6 @@ const Dashboard = (props) => {
                       {event.event_name}{" "}
                     </Typography>
                     </div>
-                  {/* </Link> */}
                   <Typography
                     sx={{ mb: 1.5, fontSize: 14, wordWrap: "break-word" }}
                     color="text.secondary"
@@ -141,36 +131,43 @@ const Dashboard = (props) => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  {/* {registeredStatus.event.event_id ? ( */}
-                  {registeredStatus ? (
+                  {/* {isAttending ? (
                     <Typography variant="body2" sx={{ wordWrap: "break-word" }}>
                       You are registered for this event
                     </Typography>
-                  ) : (
+                  ) : ( */}
                     <Button
                       size="small"
                       onClick={async () => {
                         try {
-                          const response = await fetch(
-                            `http://localhost:3000/api/${event.event_id}/${props.currentUser.user_id}`,
+                          const postResponse = await fetch(`http://localhost:3000/api/attendees/${event.event_id}/${props.currentUser.user_id}`, 
                             {
-                              method: "PUT",
-                              credentials: "include",
+                              method: "POST",
                               headers: {
                                 "Content-Type": "application/json",
                               },
                             }
                           );
-                          const data = await response.json();
-                          updateRegisteredStatus(true);
+                          const postData = await postResponse.json();
+                          readEventsRequest().then((data) => {
+                            data = data.sort((a, b) => {
+                              let dateA = new Date(a.date_time);
+                              let dateB = new Date(b.date_time);
+                              return dateA - dateB;
+                            });
+                            console.log(data);
+                            updateEvents(data);
+                            data = mapEvents(data);
+                            updateEventCards(data);
+                          });
                         } catch (err) {
                           console.error("Error registering for event: ", err);
                         }
                       }}
                     >
                       Register
-                    </Button>
-                  )}
+                    </Button>                    
+                  {/* )} */}
                 </CardActions>
               </React.Fragment>
             </Card>
