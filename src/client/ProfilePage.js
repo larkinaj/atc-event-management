@@ -14,10 +14,12 @@ import "./styles/profile-page.css";
 import { BoltRounded, Search, Description } from "@mui/icons-material"; // default exports vs named exports
 import readEventsRequest from "./api/readEventsRequest";
 import dateConverter from "./helperFunction";
+import deleteEventRequest from './api/deleteEventRequest';
 import Header from "./Header";
 
 const ProfilePage = (props) => {
   const navigate = useNavigate();
+  console.log('current user', props.currentUser)
   function stringAvatar(name) {
     return {
       sx: {
@@ -38,10 +40,10 @@ const ProfilePage = (props) => {
   useEffect(() => {
     readEventsRequest().then((data) => {
       data = data.sort((a, b) => {
-        let dateA = new Date(dateConverter(a.date_time));
-        let dateB = new Date(dateConverter(b.date_time));
-        return dateA - dateB;
-      });
+        let dateA = new Date(a.date_time)
+        let dateB = new Date(b.date_time)
+        return dateA - dateB
+      })
       console.log(data);
       updateEvents(data);
       const eventsHostingData = data.reduce((acc, curr) => {
@@ -56,16 +58,16 @@ const ProfilePage = (props) => {
 
   const editEventButton = (event) => {
     props.setEventDetails({
-      nameOfEvent: event.eventName,
+      nameOfEvent: event.event_name,
       industryOfEvent: event.industry,
-      typeOfEvent: event.eventType,
+      typeOfEvent: event.event_type,
       descriptionOfEvent: event.event_description,
-      locationOfEvent: event.location,
-      priceOfEvent: "",
-      imageOfEvent: "",
-    });
-    navigate("/edit-event/" + event.event_id);
-  };
+      locationOfEvent: event.event_location,
+      priceOfEvent: Number(event.event_price),
+      imageOfEvent: '',
+    })
+    navigate("/edit-event/" + event.event_id)
+  }
 
   const handleFileChange = (event) => {
     const { name, files } = event.target;
@@ -77,26 +79,27 @@ const ProfilePage = (props) => {
     setFormValues((prevValues) => ({ ...prevValues, [name]: value }));
   };
 
-  const testEvents = [
-    {
-      event_id: 1,
-      eventName: "Codesmith Graduation Party",
-      eventDate: "September 9, 2023",
-      industry: "Information Technology",
-      eventType: "Alumni Gathering",
-      location: "NYC",
-      numAttendees: 32,
-    },
-    {
-      event_id: 2,
-      eventName: "Burger Conference",
-      eventDate: "April 20, 2023",
-      industry: "Food and Beverage",
-      eventType: "Career Fair",
-      location: "San Fransisco",
-      numAttendees: 237,
-    },
-  ];
+  const deleteEventButton = (id) => {
+    deleteEventRequest(id).then((data)=>{
+      console.log('data returned from delete', data);
+      readEventsRequest().then((data) => {
+        data = data.sort((a, b) => {
+          let dateA = new Date(dateConverter(a.date_time))
+          let dateB = new Date(dateConverter(b.date_time))
+          return dateA - dateB
+        })
+        updateEvents(data);
+        const eventsHostingData = data.reduce((acc, curr) => {
+          if (curr.host_id === props.currentUser.user_id) {
+            acc.push(curr);
+          }
+          return acc;
+        }, []);
+        updateEventsHosting(mappingCards(eventsHostingData, 'hosting'));
+      })
+    })
+  }
+
 
   const mappingCards = (arrayOfData, typeOfEvents) => {
     if (typeOfEvents === "hosting") {

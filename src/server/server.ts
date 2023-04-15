@@ -17,11 +17,11 @@ const PORT = 3000;
 // import types
 import { Request, Response, NextFunction } from 'express';
 
-// app.use(cors({
-//   origin: "http://localhost:8080",   // <-- where React app is located
-//   credentials: true
-// }));
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:8080",   // <-- where React app is located
+  credentials: true
+}));
+// app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
