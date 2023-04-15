@@ -32,28 +32,30 @@ import Header from "./Header";
 
 import testEvents from "./testEvent";
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+  console.log('current user', props.currentUser)
   const [events, updateEvents] = React.useState([]); // Raw events array
   const [eventCards, updateEventCards] = React.useState([]); // Array of event cards
 
   useEffect(() => {
-    // readEventsRequest().then((data) => {
-    //   console.log(data);
-    //   updateEvents(data);
-    //   data = mapEvents(data);
-    //   updateEventCards(data);
-    // });
-    let data = testEvents;
-    updateEvents(data);
-    data = mapEvents(data);
-    updateEventCards(data);
+    readEventsRequest().then((data) => {
+      data = data.sort((a, b) => {
+        let dateA = new Date(a.date_time)
+        let dateB = new Date(b.date_time)
+        return dateA - dateB
+      })
+      console.log(data);
+      updateEvents(data);
+      data = mapEvents(data);
+      updateEventCards(data);
+    });
   }, []);
 
   // Helper function for creating an array of event cards from the raw events array
   const mapEvents = (eventsArray) => {
-    return eventsArray.map((event) => {
+    return eventsArray.map((event, i) => {
       return (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={event.event_name}>
+        <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
           <div>
             <Card
               sx={{
@@ -143,11 +145,11 @@ const Dashboard = () => {
       }
       return acc;
     }, []);
-    // filteredEvents = filteredEvents.sort((a, b) => {
-    //   let testA = new Date(dateConverter(a.date_time))
-    //   let testB = new Date(dateConverter(b.date_time))
-      
-    // })
+    filteredEvents = filteredEvents.sort((a, b) => {
+      let dateA = new Date(dateConverter(a.date_time))
+      let dateB = new Date(dateConverter(b.date_time))
+      return dateA - dateB
+    })
     const filteredEventCards = mapEvents(filteredEvents);
     updateEventCards(filteredEventCards);
   };
@@ -184,7 +186,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard">
-      <Header />
+      <Header currentUser={props.currentUser} />
       <Grid container className="queryBar" spacing={2}>
         <Grid item className="search-items">
           <TextField
@@ -194,21 +196,21 @@ const Dashboard = () => {
             variant="outlined"
             placeholder="Search..."
             size="small"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={searchEvents}
-                    className="searchIcon"
-                    type="button"
-                    sx={{ p: "10px" }}
-                    aria-label="search"
-                  >
-                    <Search className="searchIcon" />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
+            // InputProps={{
+            //   endAdornment: (
+            //     <InputAdornment position="end">
+            //       <IconButton
+            //         onClick={searchEvents}
+            //         className="searchIcon"
+            //         type="button"
+            //         sx={{ p: "10px" }}
+            //         aria-label="search"
+            //       >
+            //         <Search className="searchIcon" />
+            //       </IconButton>
+            //     </InputAdornment>
+            //   ),
+            // }}
           />
         </Grid>
         <Grid item className="search-items">
@@ -268,6 +270,9 @@ const Dashboard = () => {
               <MenuItem value={"Webinar/Workshop"}>Webinar/Workshop</MenuItem>
             </Select>
           </FormControl>
+        </Grid>
+        <Grid item className="search-items">
+          <Button variant="contained" sx={{ paddingLeft: "40px", paddingRight: "40px", paddingTop: "14px", paddingBottom: "14px" }}>Search</Button>
         </Grid>
       </Grid>
       <div className="allCardsWrapper">

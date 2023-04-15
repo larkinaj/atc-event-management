@@ -1,15 +1,20 @@
 import React from "react";
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Button, TextField, Box, Link, Typography } from "@mui/material";
 import "./styles/landingpage.css";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import backgroundImage from "./assets/background.jpeg";
+import { PropaneSharp } from "@mui/icons-material";
 
-const LandingPage = () => {
+const LandingPage = (props) => {
+  const navigate = useNavigate();
+  const [loginStatus, setLoginStatus] = React.useState(); // Raw events array
   const loginUser = (event) => {
     event.preventDefault();
     let credentials = {
+      username: event.target.userLogin.value,
+      password: event.target.passLogin.value,
       username: event.target.userLogin.value,
       password: event.target.passLogin.value,
     };
@@ -63,14 +68,14 @@ const LandingPage = () => {
     "Webinars and workshops",
   ];
 
-  const testRequest = () => {
-    return fetch(`http://localhost:3000/api/login`, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((data) => console.log("data from fetch: ", data));
-  };
-  testRequest();
+  // const testRequest = () => {
+  //   return fetch(`http://localhost:3000/api/login`, {
+  //     method: "GET",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => console.log("data from fetch: ", data));
+  // };
+  // testRequest();
 
   return (
     <div className="landing-page">
@@ -161,6 +166,9 @@ const LandingPage = () => {
                 }}
               />
             </div>
+            <span style={{color: "red" }}>
+              {loginStatus}
+            </span>
             <div className="loginButtons">
               <Button type="submit" variant="outlined" size="small">
                 Login
