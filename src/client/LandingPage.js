@@ -1,5 +1,5 @@
 import React from "react";
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { Button, TextField, Box, Link, Typography } from "@mui/material";
 import "./styles/landingpage.css";
 import ListItem from "@mui/material/ListItem";
@@ -10,6 +10,7 @@ import { PropaneSharp } from "@mui/icons-material";
 const LandingPage = (props) => {
   const navigate = useNavigate();
   const [loginStatus, setLoginStatus] = React.useState(); // Raw events array
+
   const loginUser = (event) => {
     event.preventDefault();
     let credentials = {
@@ -18,43 +19,30 @@ const LandingPage = (props) => {
     };
     console.log(credentials);
     // Uncomment the code below once the backend team finishes the routes
-    fetch('http://localhost:3000/api/users/login', {
-      method: 'POST',
-      credentials: 'include',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(credentials)
+    fetch("http://localhost:3000/api/users/login", {
+      method: "POST",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
     })
-    .then((res)=>{
-      if (res.status === 400) {
-        setLoginStatus('Invalid Username or Password')
-      }
-      else {
-        setLoginStatus()
-      }
-      return res.json()
-    })
-    .then((data) => {
-      console.log(data)
-      props.setCurrentUser(data)
-      console.log(props.currentUser)
-      navigate("/dashboard")
-      fetch('http://localhost:3000/api/users/editUser/5', {
-        method: 'PUT',
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'include',
-        body: JSON.stringify({
-          "first_name": "kay",
-          "last_name": "reem",
-          "email": "kreem@gmail.com",
-          "bio": "hi i am kayreem and i love tea",
-          "industry": "sad chemE"
-        })
+      .then((res) => {
+        if (res.status >= 400) {
+          setLoginStatus("Invalid Username or Password");
+        } else {
+          setLoginStatus();
+        }
+        return res.json();
       })
-      .then((res)=>res.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
+        props.setCurrentUser(data);
+        console.log(props.currentUser);
+        navigate("/dashboard");
       })
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   const items = [
@@ -111,12 +99,38 @@ const LandingPage = (props) => {
             <div className="loginInputs">
               <h2>Login</h2>
               <TextField
+                fullWidth
+                required
+                variant="outlined"
+                margin="normal"
+                label="Username"
+                name="userLogin"
+                // value={formValues.username}
+                // onChange={handleChange}
+                size="small"
+                className="custom-margin"
+              />
+              <TextField
+                fullWidth
+                required
+                variant="outlined"
+                margin="normal"
+                label="Password"
+                name="passLogin"
+                type="password"
+                // value={formValues.password}
+                // onChange={handleChange}
+                size="small"
+                className="custom-margin"
+              />
+              {/* <TextField
                 required
                 id="outlined-required"
                 name="userLogin"
                 label="Username"
                 variant="outlined"
                 size="small"
+                InputLabelProps={{ shrink: true }}
                 sx={{
                   "& .MuiInputLabel-outlined": {
                     // Vertically centers the label
@@ -144,6 +158,7 @@ const LandingPage = (props) => {
                 type="password"
                 variant="outlined"
                 size="small"
+                InputLabelProps={{ shrink: true }}
                 sx={{
                   "& .MuiInputLabel-outlined": {
                     // Vertically centers the label
@@ -162,11 +177,9 @@ const LandingPage = (props) => {
                     },
                   },
                 }}
-              />
+              /> */}
             </div>
-            <span style={{color: "red" }}>
-              {loginStatus}
-            </span>
+            <span style={{ color: "red" }}>{loginStatus}</span>
             <div className="loginButtons">
               <Button type="submit" variant="outlined" size="small">
                 Login
@@ -180,14 +193,16 @@ const LandingPage = (props) => {
                   Not a member?{" "}
                 </Typography>
                 <Link
-                  component={RouterLink} to="/registration"
+                  component={RouterLink}
+                  to="/registration"
                   sx={{ fontSize: "12px", color: "#003366" }}
                 >
                   Signup
                 </Link>{" "}
                 |{" "}
                 <Link
-                  component={RouterLink} to="/reset"
+                  component={RouterLink}
+                  to="/reset"
                   sx={{ fontSize: "12px", color: "#003366" }}
                 >
                   Forgot password?

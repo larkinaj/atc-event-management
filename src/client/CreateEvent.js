@@ -11,16 +11,21 @@ import {
   MenuItem,
   InputLabel,
   IconButton,
+  Typography
 } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dayjs from "dayjs";
 import { PhotoCamera } from "@mui/icons-material";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import "./styles/create-event.css";
+import Header from "./Header";
 
 const CreateEvent = (props) => {
+
+  const navigate = useNavigate();
 
   const [eventDateTime, setEventDateTime] = useState(dayjs(new Date()));
   const { id } = useParams()
@@ -129,11 +134,26 @@ const CreateEvent = (props) => {
       console.log('database response',response);
     }
 
+    props.setEventDetails({
+      nameOfEvent: '',
+      industryOfEvent: '',
+      typeOfEvent: '',
+      descriptionOfEvent: '',
+      locationOfEvent: '',
+      priceOfEvent: '',
+      imageOfEvent: '',
+    });
+    navigate("/dashboard");
   };
 
+
+  const formTitle = id ? "Edit Event" : "Create Event";
+
   return (
+    <div>
+      <Header currentUser={props.currentUser}/>
     <div className="createEventPage">
-      <h4 className="createEventHeader">Fill Out Event Details</h4>
+      <Typography variant="h4" sx={{ margin: "0.5rem" }}>{formTitle}</Typography>
       <div className="createEventBox">
         <div className="createEventInput">
           <h4 className="createEventLeft">Name of event:</h4>
@@ -146,11 +166,13 @@ const CreateEvent = (props) => {
             variant="outlined"
             onChange={eventNameChange}
             value={props.eventDetails.nameOfEvent}
+            className="full-width"
+            size="small"
           />
         </div>
         <div className="createEventInput">
           <h4 className="createEventLeft">Industry:</h4>
-          <FormControl sx={{ minWidth: 200 }} fullWidth>
+          <FormControl sx={{ minWidth: 200 }} fullWidth size="small">
             <InputLabel className="">Event Industry</InputLabel>
             <Select
               className=""
@@ -174,7 +196,7 @@ const CreateEvent = (props) => {
         </div>
         <div className="createEventInput">
           <h4 className="createEventLeft">Event Type:</h4>
-          <FormControl sx={{ minWidth: 200 }} className="full-width">
+          <FormControl sx={{ minWidth: 200 }} className="full-width" size="small">
             <InputLabel className="full-width">Event Type</InputLabel>
             <Select
               className=""
@@ -196,7 +218,7 @@ const CreateEvent = (props) => {
           </FormControl>
         </div>
         <div className="createEventInput">
-          <h4 className="createEventLeft">Descrption:</h4>
+          <h4 className="createEventLeft">Description:</h4>
           <TextField
             fullWidth
             required
@@ -208,11 +230,12 @@ const CreateEvent = (props) => {
             rows={4}
             onChange={eventDescriptionChange}
             value={props.eventDetails.descriptionOfEvent}
+            className="full-width"
           />
         </div>
         <div className="createEventInput">
           <h4 className="createEventLeft">Date and Time:</h4>
-          <FormControl sx={{ minWidth: 200 }} className="full-width">
+          <FormControl sx={{ minWidth: 200 }} className="full-width" size="small">
             <LocalizationProvider
               dateAdapter={AdapterDayjs}
               className="full-width"
@@ -239,6 +262,8 @@ const CreateEvent = (props) => {
             variant="outlined"
             onChange={eventLocationChange}
             value={props.eventDetails.locationOfEvent}
+            className="full-width"
+            size="small"
           />
         </div>
         <div className="createEventInput">
@@ -264,37 +289,31 @@ const CreateEvent = (props) => {
             </FormControl>
           </div>
         </div>
-        <div className="createEventInput">
-          <h4 className="createEventLeft">Image:</h4>
-          <div className="createEventRight">
-            <Button component="label">
-              Upload
-              <input
-                onChange={eventImageChange}
-                hidden
-                accept="image/*"
-                multiple
-                type="file"
-              />
-            </Button>
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="label"
-            >
-              <input hidden accept="image/*" type="file" />
-              <PhotoCamera />
-            </IconButton>
-          </div>
-        </div>
+        <Button
+          component="label"
+          variant="contained"
+          color="primary"
+          sx={{ backgroundColor: "#003366", margin: "10px", width: "200px" }}
+        >
+          Upload Image 
+          <PhotoCamera sx={{ marginLeft: "5px", fontSize: "1rem" }} />
+          <input
+            onChange={eventImageChange}
+            hidden
+            accept="image/*"
+            multiple
+            type="file"
+          />
+        </Button>
         <Button
           variant="contained"
-          sx={{ backgroundColor: "#003366", margin: "20px" }}
+          sx={{ backgroundColor: "#003366", margin: "10px", width: "200px" }}
           onClick={submitEvent}
         >
-          Create Event
+          Submit Form
         </Button>
       </div>
+    </div>
     </div>
   );
 };
