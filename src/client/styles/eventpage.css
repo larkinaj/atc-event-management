@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.event-page {
+  background: white;
+  margin: 0;
+  height: 90vh;
+  display: grid;
+  place-content: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+.banner {
+  border-radius: 0.25em; /* default radius for MUI Paper component is 4px */
+}

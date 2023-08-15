@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+.editUser-page {
+  margin: 0;
+  padding: 0;
+  height: 90vh;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editUser {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.editUser h4 {
+  color: #778899;
+}
+
+.custom-margin {
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.reg-buttons .MuiButton-root {
+  background-color: #003366;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.reg-buttons .MuiButton-root:hover {
+  background-color: #00274d;
+  color: white;
+  border: none;
+}
